@@ -10,11 +10,22 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import styled from 'styled-components/native'
 
+const StyledView = styled.View`
+  background-color: yellow;
+`
+
+const StyledText = styled.Text`
+  color: red;
+`
 
 function HomeScreen({ navigation }:any) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <StyledView>
+        <StyledText>Hello World!</StyledText>
+      </StyledView>
       <Button
         onPress={() => navigation.navigate('Notifications')}
         title="Go to notifications"
