@@ -47,8 +47,8 @@ const App = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} options={{ title: 'Notice' }}/>        
       </Drawer.Navigator>
     </NavigationContainer>
   );
