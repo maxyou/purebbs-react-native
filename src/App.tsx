@@ -1,58 +1,53 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Button,
-  Text,
-  StatusBar,
-} from 'react-native';
-import styled from 'styled-components/native'
+import * as React from 'react';
+import { Component } from 'react';
+import { createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
+import reducers from './redux/reducer';
+import createSagaMiddleware from 'redux-saga'
+import rootSaga from './redux/saga'
+import Layout from './layout'
+import ApolloClient from 'apollo-boost';
+import { sys } from './config';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const StyledView = styled.View`
-  background-color: yellow;
-`
+var urljoin = require('url-join');
 
-const StyledText = styled.Text`
-  color: red;
-`
+console.log(urljoin(sys.appHomepage, sys.graphql_endpoint))
 
-function HomeScreen({ navigation }:any) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <StyledView>
-        <StyledText>Hello World!</StyledText>
-      </StyledView>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-    </View>
-  );
+const client = new ApolloClient({
+  uri: urljoin(sys.appHomepage, sys.graphql_endpoint),
+});
+
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__' as keyof typeof window] as typeof compose || compose;
+
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(
+  reducers,
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware)
+  )
+)
+sagaMiddleware.run(rootSaga)
+
+// const store = createStore(
+//   reducers,
+//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+// )
+
+class App extends Component<{}, {}> {
+  render() {
+    return (
+      <>
+        <Provider store={store}>
+          <ApolloProvider client={client}>
+            <Layout />
+          </ApolloProvider>
+        </Provider>
+      </>
+    );
+  }
 }
-
-function NotificationsScreen({ navigation }:any) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
-const Drawer = createDrawerNavigator();
-
-const App = () => {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} options={{ title: 'Notice' }}/>        
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
-};
-
 
 export default App;
