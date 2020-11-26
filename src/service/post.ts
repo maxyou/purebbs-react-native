@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../tool/net'
 import cookies from 'react-cookies'
 
 axios.defaults.headers.common['x-csrf-token'] = cookies.load('csrfToken');
@@ -15,7 +15,7 @@ export default {
   },
   postGet(v:any) {
     if (v) {
-      console.log('post get use getpages')
+      console.log(`post get use getpages, params:${JSON.stringify(v)}`)
       return axios.get('/post/getpage', { params: {pageInfo:JSON.stringify(v) }})
     } else {
       console.log('post get use get')

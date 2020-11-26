@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
-// import * as Info from '../info'
+import PostScreen from '../biz/post'
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,8 +22,13 @@ const StyledView = styled.View`
 const StyledText = styled.Text`
   color: red;
 `
+interface Props{
+  navigation:any
+}
+const HomeScreen:React.FC<Props> = ({ navigation }) => {
 
-function HomeScreen({ navigation }:any) {
+
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <StyledView>
@@ -35,7 +42,7 @@ function HomeScreen({ navigation }:any) {
   );
 }
 
-function NotificationsScreen({ navigation }:any) {
+const DetailScreen:React.FC<Props> = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button onPress={() => navigation.goBack()} title="Go back home" />
@@ -43,14 +50,15 @@ function NotificationsScreen({ navigation }:any) {
   );
 }
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} options={{ title: 'Overview' }} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} options={{ title: 'Notice' }}/>        
-      </Drawer.Navigator>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={PostScreen} options={{ title: 'PureBBS' }} />
+        <Stack.Screen name="Notifications" component={DetailScreen} options={{ title: 'Detail' }}/>        
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

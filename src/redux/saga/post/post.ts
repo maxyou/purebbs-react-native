@@ -21,14 +21,14 @@ function* postAdd(action:IAction) {
     }
 }
 function* postGet(action:IAction) {
-    // console.log('====post get 1');
+    console.log('====post get 1');
     var res = yield call(servicePost.postGet, action.payload)
-    // console.log('====post get 2'+JSON.stringify(res.data));
+    console.log('====post get 2'+JSON.stringify(res.data));
     if(res.data.code===0){
-        // console.log('====post get 3');
+        console.log('====post get 3');
         yield put({ type: actionPost.ACTION.POST_GET_SUCCESS, payload: res.data })
     }else{        
-        // console.log('====post get 4');
+        console.log('====post get 4');
         yield put({ type: actionPost.ACTION.POST_GET_FAIL, payload: res.data })
     }
 }
