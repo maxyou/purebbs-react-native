@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PostScreen from '../biz/post'
+import DetailScreen from '../biz/detail'
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -42,22 +43,22 @@ const HomeScreen:React.FC<Props> = ({ navigation }) => {
   );
 }
 
-const DetailScreen:React.FC<Props> = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
+// const DetailScreen:React.FC<Props> = ({ navigation }) => {
+//   return (
+//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//       <Button onPress={() => navigation.goBack()} title="Go back home" />
+//     </View>
+//   );
+// }
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={PostScreen} options={{ title: 'PureBBS' }} />
-        <Stack.Screen name="Notifications" component={DetailScreen} options={{ title: 'Detail' }}/>        
+      <Stack.Navigator initialRouteName="Post">
+        <Stack.Screen name="Post" component={PostScreen} options={{ title: 'PureBBS' }} />
+        <Stack.Screen name="Detail" component={DetailScreen} options={{ title: 'Detail' }}/>        
       </Stack.Navigator>
     </NavigationContainer>
   );

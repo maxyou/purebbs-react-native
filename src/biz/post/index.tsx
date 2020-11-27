@@ -11,40 +11,31 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native'
 import List from './list'
-const requestCameraPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: "Cool Photo App Camera Permission",
-          message:
-            "Cool Photo App needs access to your camera " +
-            "so you can take awesome pictures.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
-        }
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use the camera");
-      } else {
-        console.log("Camera permission denied");
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-const PostScreen = () => {
+interface Props {
+  navigation: any,
+  route: any
+}
+
+const PostScreen: React.FC<Props> = function (props) {
 
 
-    return (
-       <View>
-           <Text>PostScreen</Text>
-           <Button title="request permissions" onPress={requestCameraPermission} />
-           <List></List>
-       </View>
-    );
-  };
-  
-  
-  export default PostScreen;
+  return (
+    <View>
+      {/* <Button
+        title="Go to Detail@@@@@@@@@@@@"
+        onPress={() => {
+          console.log('press goto detail')
+          props.navigation.navigate('Detail', { id: '--id-------' })
+        }}
+      />
+      <Button
+        title="Update the title"
+        onPress={() => props.navigation.setOptions({ title: 'Updated!' })}
+      /> */}
+      <List></List>
+    </View>
+  );
+};
+
+
+export default PostScreen;

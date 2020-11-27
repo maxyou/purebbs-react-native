@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Component, useEffect, useRef } from 'react'
+import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
 import { post as actionPost } from '../../redux/action'
@@ -23,16 +24,16 @@ const StyledDivCard = styled(View)`
   margin: 5px;
 `
 
-function useIdAsKey(postListResult:any):any {
+function useIdAsKey(postListResult: any): any {
 
   console.log(postListResult)
   if (postListResult && postListResult.data && postListResult.data.length >= 0) {
-    return postListResult.data.map((v:any) => ({ ...v, key: v._id }))
+    return postListResult.data.map((v: any) => ({ ...v, key: v._id }))
   }
   return []
 }
 
-function usePrevious(value:any): any {
+function usePrevious(value: any): any {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -40,9 +41,11 @@ function usePrevious(value:any): any {
   return ref.current;
 }
 
-const PostList: React.FC<IState2Prop & IDispatch2Prop> = function (props: IState2Prop & IDispatch2Prop) {
+const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
   // function postList(props) {
 
+  const navigation = useNavigation();
+  console.log(`PostList navigation: ${navigation}`)
   const { postAdding, postUpdatting, postDeletting, postPageCurrent, postPageSize, categoryCurrent, postAttaching } = props
   const prevProps: IState2Prop = usePrevious({ postAdding, postUpdatting, postDeletting, postPageCurrent, postPageSize, categoryCurrent, postAttaching })
 
@@ -82,19 +85,31 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop> = function (props: IState
 
   return (
     <View>
+      
       {
-        dataSource.map((v:any) => <StyledDivCard key={v.key}>          
-            <Text>
-              {JSON.stringify(v.title)}
-            </Text>
+        dataSource.map((v: any) => <StyledDivCard key={v.key}>
+          <Text>
+            {JSON.stringify(v.title)}
+
+            <Button
+              title="Go to Detail"
+              onPress={() => {
+                console.log('press goto detail')
+                navigation.navigate('Detail', { id: v._id })
+              }}
+            />
+          </Text>
         </StyledDivCard>)
       }
     </View>
   )
 }
-
-interface ICategoryItem{
-  idStr:string,
+interface Props {
+  navigation: any,
+  route: any
+}
+interface ICategoryItem {
+  idStr: string,
   name: string,
 }
 interface IState2Prop {
@@ -112,10 +127,10 @@ interface IState2Prop {
   category: ICategoryItem[],
 }
 interface IDispatch2Prop {
-  get: (v?:any) => void,
-  findByIdAndDelete: (v?:any) => void,
-  findByIdAndUpdate: (v:any) => void,
-  postFindByIdAndAttach: (v?:any) => void,
+  get: (v?: any) => void,
+  findByIdAndDelete: (v?: any) => void,
+  findByIdAndUpdate: (v: any) => void,
+  postFindByIdAndAttach: (v?: any) => void,
 }
 
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
@@ -143,7 +158,7 @@ const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: 
 //   mapStateToProps,
 //   mapDispatchToProps
 // )(postList))
-export default 
+export default
   (connect(
     mapStateToProps,
     mapDispatchToProps
