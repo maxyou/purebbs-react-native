@@ -16,13 +16,14 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 const ItemHeight = '60px'
 const PostTitleHeight = '40px'
 const PostInfoHeight = '20px'
 
 const StyledDivCard = styled(View)`  
   margin: 5px;
-  height: 40;
+  height: 40px;
   backgroundColor: #7788cc;
 `
 
@@ -87,20 +88,27 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
 
   return (
     <View>
+      <FlatList
+        data={dataSource}
+        renderItem={
+          (v: any) => {
+            console.log(v)
+            return <StyledDivCard>
+              <Text
+                onPress={() => {
+                  console.log('press goto detail')
+                  navigation.navigate('DetailPost', { id: v.item.postId })
+                }}
+              >
+                {JSON.stringify(v.item.title)}
+              </Text>
+            </StyledDivCard>
+          }
+        }
 
-      {
-        dataSource.map((v: any) => <StyledDivCard key={v.key}>
-          <Text
-            onPress={() => {
-              console.log('press goto detail')
-              navigation.navigate('DetailPost', { id: v.postId })
-            }}
-          >
-            {JSON.stringify(v.title)}
+      />
 
-          </Text>
-        </StyledDivCard>)
-      }
+      
     </View>
   )
 }
