@@ -7,15 +7,15 @@ import {detail as actionDetail, extend as actionExtend} from '../../action'
 import {IAction} from '../../common'
 
 function* detailPostGet(action:IAction) {    
-    // console.log('====detail post get 1');
+    console.log('====detail post get 1');
     var res = yield call(serviceDetail.detailPostGet, action.payload)
-    // console.log('====detail post get 2'+JSON.stringify(res.data));
+    console.log('====detail post get 2'+JSON.stringify(res.data));
     if(res.data.code===0){
-        // console.log('====detail post get 3');
+        console.log('====detail post get 3');
         yield put({ type: actionDetail.ACTION.DETAIL_POST_GET_SUCCESS, payload: res.data })
         yield put({ type: actionExtend.ACTION.EXTEND_DATA_GET_SUCCESS, payload: res.data }) //为隔离起见，数据复制到redux.state.extend
     }else{        
-        // console.log('====detail post get 4');
+        console.log('====detail post get 4');
         yield put({ type: actionDetail.ACTION.DETAIL_POST_GET_FAIL, payload: res.data })
     }
 }

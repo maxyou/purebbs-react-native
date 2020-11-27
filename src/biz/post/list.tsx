@@ -20,13 +20,15 @@ const ItemHeight = '60px'
 const PostTitleHeight = '40px'
 const PostInfoHeight = '20px'
 
-const StyledDivCard = styled(View)`
+const StyledDivCard = styled(View)`  
   margin: 5px;
+  height: 40;
+  backgroundColor: #7788cc;
 `
 
 function useIdAsKey(postListResult: any): any {
 
-  console.log(postListResult)
+  // console.log(postListResult)
   if (postListResult && postListResult.data && postListResult.data.length >= 0) {
     return postListResult.data.map((v: any) => ({ ...v, key: v._id }))
   }
@@ -81,23 +83,21 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
 
 
   const dataSource = useIdAsKey(props.postListResult)
-  console.log(`dataSource: ${dataSource}`)
+  // console.log(`dataSource: ${dataSource}`)
 
   return (
     <View>
-      
+
       {
         dataSource.map((v: any) => <StyledDivCard key={v.key}>
-          <Text>
+          <Text
+            onPress={() => {
+              console.log('press goto detail')
+              navigation.navigate('DetailPost', { id: v.postId })
+            }}
+          >
             {JSON.stringify(v.title)}
 
-            <Button
-              title="Go to Detail"
-              onPress={() => {
-                console.log('press goto detail')
-                navigation.navigate('Detail', { id: v._id })
-              }}
-            />
           </Text>
         </StyledDivCard>)
       }
