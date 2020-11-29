@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PostScreen from '../biz/post'
-import {post as DetailPost} from '../biz/detail'
+import {post as DetailPost, comment as DetailComment} from '../biz/detail'
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -59,6 +59,7 @@ const App = () => {
       <Stack.Navigator initialRouteName="Post">
         <Stack.Screen name="Post" component={PostScreen} options={{ title: 'PureBBS' }} />
         <Stack.Screen name="DetailPost" component={DetailPost} options={{ title: 'DetailPost' }}/>        
+        <Stack.Screen name="DetailComment" component={DetailComment} options={{ title: 'DetailComment' }}/>        
       </Stack.Navigator>
     </NavigationContainer>
   );

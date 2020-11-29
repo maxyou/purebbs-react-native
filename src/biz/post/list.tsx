@@ -120,7 +120,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                 {
                   v.item.commentNum == 0? null
                   :<Button title={''+v.item.commentNum}
-                  onPress={()=>navigation.navigate('DetailPost', { id: v.item.postId })}
+                  onPress={()=>navigation.navigate('DetailComment', { id: v.item.postId })}
                   />                  
                 }                
 
