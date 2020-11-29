@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {sys} from '../config'
 
 // Create axios client, pre-configured with baseURL
 let http = axios.create({
-  baseURL: 'http://192.168.31.70:3001',
+  baseURL: sys.appHomepage,
   timeout: 10000,
 });
 

@@ -1,5 +1,6 @@
 import { IExtendState } from '../redux/common'
 var path = require('path');
+import {sys} from '../config'
 /**
  * todo 这里遗留一个问题
  * 
@@ -39,20 +40,29 @@ export default {
         anonymous: boolean,
         isMyself: boolean,
     ): string {
+        console.log('========in calcAvatarPath==========')
+        console.log(user)
+        console.log(anonymous)
+        console.log(isMyself)
         if (anonymous) {
             if (isMyself) {
-                return API_PATH_AVATAR + 'myanonymous.png'
+                console.log(path.join(sys.appHomepage, API_PATH_AVATAR + 'myanonymous.png'))
+                return path.join(sys.appHomepage, API_PATH_AVATAR + 'myanonymous.png')
             } else {
-                return API_PATH_AVATAR + 'anonymous.png'
+                console.log(path.join(sys.appHomepage, API_PATH_AVATAR + 'anonymous.png'))
+                return path.join(sys.appHomepage, API_PATH_AVATAR + 'anonymous.png')
             }
         } else {
             if (user.source === 'oauth') {
+                console.log(user.oauth.avatarUrl)
                 return user.oauth.avatarUrl
             } else {//暂时认为只有 oauth 及 register 两类                
                 if (user.avatarFileName) {
-                    return API_PATH_AVATAR + user.avatarFileName
+                    console.log(path.join(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName))
+                    return path.join(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName)
                 } else {
-                    return API_PATH_AVATAR + 'default.png'
+                    console.log(path.join(sys.appHomepage,  API_PATH_AVATAR + 'default.png'))
+                    return path.join(sys.appHomepage,  API_PATH_AVATAR + 'default.png')
                 }
             }
         }
