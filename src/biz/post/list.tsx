@@ -21,6 +21,12 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 // import placeHolder from '../../res/img/default.png';
 
+const StyledViewTitle = styled(View)`  
+  width: 380px;  
+  flexShrink: 1;
+  `
+// backgroundColor: #17888c;
+
 // TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 const ButtonContainer = styled(TouchableOpacity)`
   width: 50px;
@@ -29,8 +35,8 @@ const ButtonContainer = styled(TouchableOpacity)`
   border-radius: 5px;
   justifyContent: center;
   alignItems: center;
-  backgroundColor: #77888c;
-  margin: 5px;
+  backgroundColor: #c7188c;
+  margin: 5px;  
 `;
 
 const ButtonText = styled(Text)`
@@ -42,7 +48,11 @@ const ButtonText = styled(Text)`
   text-transform: uppercase;
 `;
 
-const AppButton:React.FC<{onPress:()=>void,title:string}> = ({ onPress, title }) => (
+const StyledTextTitle = styled(Text)`
+`;
+// numberOfLines:1;
+
+const AppButton: React.FC<{ onPress: () => void, title: string }> = ({ onPress, title }) => (
   <ButtonContainer onPress={onPress}>
     <ButtonText>{title}</ButtonText>
   </ButtonContainer>
@@ -51,7 +61,7 @@ const AppButton:React.FC<{onPress:()=>void,title:string}> = ({ onPress, title })
 const StyledDivCard = styled(View)`  
   margin: 5px;
   height: 40px;
-  backgroundColor: #7788cc;
+  backgroundColor: #77884c;
   flexDirection: row;
   justifyContent: space-between;
   alignItems: center;
@@ -59,20 +69,12 @@ const StyledDivCard = styled(View)`
 const StyledViewAvatarTitle = styled(View)`  
   margin: 5px;
   height: 40px;
-  backgroundColor: #7788cc;
+  backgroundColor: #77d8cc;
   flexDirection: row;
   justifyContent: flex-start;
   alignItems: center;
-`
-const StyledButtonCommentNum = styled(View)`  
-  margin: 10px;
-  flexBasis: 60px;
-  height: 25px;
-  backgroundColor: #7738dc;
-  flexDirection: row;
-  justifyContent: center;
-  alignItems: center;
-`
+  flexShrink: 1;
+  `
 
 function useIdAsKey(postListResult: any): any {
 
@@ -92,7 +94,7 @@ function usePrevious(value: any): any {
 }
 
 const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
-  
+
 
   const navigation = useNavigation();
   console.log(`PostList navigation: ${navigation}`)
@@ -150,18 +152,23 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                   }}
                   source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
                 />
-                <Text
-                  onPress={() => {
-                    console.log('press goto detail')
-                    navigation.navigate('DetailPost', { id: v.item.postId })
-                  }}
-                >
-                  {JSON.stringify(v.item.title)}
-                </Text>
+                <StyledViewTitle>
+                  <StyledTextTitle
+                    numberOfLines={1}
+                    ellipsizeMode={'tail'}
+                    onPress={() => {
+                      console.log('press goto detail')
+                      navigation.navigate('DetailPost', { id: v.item.postId })
+                    }}
+                  >
+                    {JSON.stringify(v.item.title)}
+                  </StyledTextTitle>
+                </StyledViewTitle>
               </StyledViewAvatarTitle>
               {
                 v.item.commentNum == 0 ? null
-                  : <AppButton title={'' + v.item.commentNum}
+                  :
+                  <AppButton title={'' + v.item.commentNum}
                     onPress={() => navigation.navigate('DetailComment', { id: v.item.postId })}
                   />
               }
