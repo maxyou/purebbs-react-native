@@ -63,8 +63,8 @@ const StyledViewAvatarTitle = styled(View)`
   flexShrink: 1;
   `
 const StyledImageAvatar = styled(Image)`
-  width: 30;
-  height: 30;
+  width: 30px;
+  height: 30px;
   borderRadius: 20px;
   marginLeft: 5px;
   `
