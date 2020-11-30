@@ -7,49 +7,41 @@ import { calc, time } from '../../tool'
 import ReactMde from "react-mde"
 import styled from 'styled-components'
 import * as Showdown from "showdown";
-import { Text, View } from 'react-native';
-
-const converter = new Showdown.Converter({
-  tables: true,
-  simplifiedAutoLink: true,
-  strikethrough: true,
-  tasklists: true
-});
-
-const CommentTotalHeight = '60px'
-const CommentInfoHeight = '20px'
+import { Text, View, Image, FlatList } from 'react-native';
 
 
-const StyledDivList = styled(View)`
-  min-height: ${CommentTotalHeight}
-  padding: 0.5px;
-  margin-bottom: 5px;
-  display:flex;
-  justify-content: flex-start;
-  align-items: stretch;  
+const StyledDivCard = styled(View)`  
+  backgroundColor: #d7c8cc;
+  flexDirection: row;
+  justifyContent: flex-start;
+  alignItems: stretch;  
+  marginBottom: 1px;
   `
-  // background-color: #ffffff;
-
-  // padding: 5px;  
-const StyledDivMain = styled(View)`
-  background-color: #ffffff;
-
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  flex: 1 0 0%;
+const StyledTextContent = styled(Text)`
+  marginTop: 5px;
+  marginLeft: 5px;
+  marginRight: 5px;
+  marginBottom: 5px;
+  flexShrink: 1;
+  `
+const StyledImageAvatar = styled(Image)`
+  width: 30;
+  height: 30;
+  borderRadius: 20px;
+  marginTop: 5px;
+  marginBottom: 5px;
+  marginLeft: 5px;
   `
 
-function useIdAsKey(commentListResult:any) {
+function useIdAsKey(commentListResult: any) {
   if (commentListResult && commentListResult.data && commentListResult.data.length >= 0) {
-    return commentListResult.data.map((v:any) => ({ ...v, key: v._id }))
+    return commentListResult.data.map((v: any) => ({ ...v, key: v._id }))
   }
   // console.log(array)
   return []
 }
 
-function usePrevious(value:any): any {
+function usePrevious(value: any): any {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -101,52 +93,31 @@ const Comment: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
 
 
   return (
-    <>
-      {
-        dataSource.map((v:any) => <StyledDivList key={v.key}>
-          {/* <StyledDivContainerNoUse> */}
-          {/* {JSON.stringify(v)} */}
+    <View>
+      <FlatList
+        data={dataSource}
+        renderItem={
+          (v: any) => {
+            console.log(v)
+            return <StyledDivCard>
 
-          {/* <StyledDivAvatar> */}
-            {/* <StyledLink to={'/user/other/' + (v.authorId === props.user._id || v.anonymous === false ? v.authorId : 'anonymous')}>
-              <AvatarImg src={calc.calcAvatarPath(v, v.anonymous, v.authorId === props.user._id)}
-                width='40px' radius='20px'></AvatarImg>
-            </StyledLink> */}
+              <StyledImageAvatar
+                source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
+              />
+              {/* <StyledViewContent> */}
+                <StyledTextContent>
+                  {JSON.stringify(v.item.content)}
+                </StyledTextContent>
+              {/* </StyledViewContent> */}
 
-          {/* </StyledDivAvatar> */}
+            </StyledDivCard>            
+          }
+        }
+      >
 
-          <StyledDivMain>
+      </FlatList>
 
-            {/* <StyledDivCommentUpper> */}
-              {/* <StyledDivComment>
-                  {v.content}
-              </StyledDivComment> */}
-              {/* <StyledDivCommentMde dangerouslySetInnerHTML={{ __html: converter.makeHtml(v.content) }}></StyledDivCommentMde> */}
-            <Text>{v.content}</Text>
-            {/* </StyledDivCommentUpper> */}
-{/* 
-            <StyledDivInfo>
-              <StyledDivTime>
-                <StyledDivTime><StyledLink to={'/user/other/' + v.authorId}>{v.author}</StyledLink></StyledDivTime>
-              </StyledDivTime> */}
-
-              <Text>
-                {/*created:*/}{time.fromNow(v.created)}
-              </Text>
-
-
-              {/* <StyledDivTime>
-                <StyledLink to={'#'} onClick={() => handleLike(v)}><StyledSpanLike color={v.likeHasCurrentUser ? '#FF4500' : '#777777'} hoverColor={v.likeHasCurrentUser ? '#A52A2A' : '#333333'}>{props.words.cntnt_like}{v.likeUser.length}</StyledSpanLike></StyledLink>
-              </StyledDivTime> */}
-
-            {/* </StyledDivInfo> */}
-
-          </StyledDivMain>
-
-          {/* </StyledDivContainerNoUse> */}
-        </StyledDivList>)
-      }
-    </>
+    </View>
   )
 }
 interface Props {
@@ -166,10 +137,10 @@ interface IState2Prop {
   commentAttaching: boolean,
 }
 interface IDispatch2Prop {
-  get: (v?:any) => void,
-  delete: (v?:any) => void,
-  update: (v:any) => void,
-  findByIdAndAttach: (v?:any) => void,
+  get: (v?: any) => void,
+  delete: (v?: any) => void,
+  update: (v: any) => void,
+  findByIdAndAttach: (v?: any) => void,
 }
 
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
@@ -196,7 +167,7 @@ const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: 
 //   mapDispatchToProps
 // ) (commentList))
 
-export default 
+export default
   connect(
     mapStateToProps,
     mapDispatchToProps

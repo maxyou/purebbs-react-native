@@ -8,73 +8,67 @@ import { calc, time } from '../../tool'
 // import ErrorBoundary from 'errorBoundary'
 import styled from 'styled-components'
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   View,
   Button,
   Text,
-  StatusBar,
   Image,
   TouchableOpacity
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-// import placeHolder from '../../res/img/default.png';
 
-const StyledViewTitle = styled(View)`  
-  width: 380px;  
-  flexShrink: 1;
-  `
-// backgroundColor: #17888c;
-
-// TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
-const ButtonContainer = styled(TouchableOpacity)`
+const StyledTOButtonContainer = styled(TouchableOpacity)`
+  backgroundColor: #37688c;
+  elevation: 8;
   width: 50px;
   height: 30px;
-  elevation: 8;
   border-radius: 5px;
+  margin: 5px;  
   justifyContent: center;
   alignItems: center;
-  backgroundColor: #c7188c;
-  margin: 5px;  
-`;
-
-const ButtonText = styled(Text)`
+  `
+const StyledTextButtonTitle = styled(Text)`
   height: 25px;
-  font-size: 18;
+  font-size: 18px;
   color: #fff;
-  font-weight: bold;
-  align-self: center;
-  text-transform: uppercase;
-`;
-
-const StyledTextTitle = styled(Text)`
-`;
-// numberOfLines:1;
-
+`
 const AppButton: React.FC<{ onPress: () => void, title: string }> = ({ onPress, title }) => (
-  <ButtonContainer onPress={onPress}>
-    <ButtonText>{title}</ButtonText>
-  </ButtonContainer>
-);
+  <StyledTOButtonContainer onPress={onPress}>
+    <StyledTextButtonTitle>{title}</StyledTextButtonTitle>
+  </StyledTOButtonContainer>
+)
 
+const StyledViewTitle = styled(View)`  
+  flexShrink: 1;
+  marginLeft: 5px;
+`
+const StyledTextTitle = styled(Text)`
+`
+
+// margin: 5px;
 const StyledDivCard = styled(View)`  
-  margin: 5px;
-  height: 40px;
-  backgroundColor: #77884c;
+  backgroundColor: #d7c8cc;
+  marginBottom: 1px;
+  height: 45px;
   flexDirection: row;
   justifyContent: space-between;
   alignItems: center;
 `
+// margin: 5px;
+// backgroundColor: #77d8cc;
 const StyledViewAvatarTitle = styled(View)`  
-  margin: 5px;
   height: 40px;
-  backgroundColor: #77d8cc;
   flexDirection: row;
   justifyContent: flex-start;
   alignItems: center;
   flexShrink: 1;
   `
+const StyledImageAvatar = styled(Image)`
+  width: 30;
+  height: 30;
+  borderRadius: 20px;
+  marginLeft: 5px;
+  `
+// resizeMode: 'contain';
 
 function useIdAsKey(postListResult: any): any {
 
@@ -143,13 +137,9 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
           (v: any) => {
             console.log(v)
             return <StyledDivCard>
+
               <StyledViewAvatarTitle>
-                <Image
-                  style={{
-                    width: 30,
-                    height: 30,
-                    resizeMode: 'contain'
-                  }}
+                <StyledImageAvatar
                   source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
                 />
                 <StyledViewTitle>
@@ -165,6 +155,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                   </StyledTextTitle>
                 </StyledViewTitle>
               </StyledViewAvatarTitle>
+              
               {
                 v.item.commentNum == 0 ? null
                   :
