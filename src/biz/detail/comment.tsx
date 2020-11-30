@@ -51,6 +51,14 @@ function usePrevious(value: any): any {
 
 const Comment: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
 
+  useEffect( //退出页面时清除数据，下次进入时为空白页面，并等待从服务器刷新
+    () => {
+      return function cleanup() {
+        props.detailPostCommentsClear('')
+      }
+    }, []
+  )
+
   const { navigation, route } = props
   const { id } = route.params;
 
@@ -141,6 +149,7 @@ interface IDispatch2Prop {
   delete: (v?: any) => void,
   update: (v: any) => void,
   findByIdAndAttach: (v?: any) => void,
+  detailPostCommentsClear: (v:any) => void,
 }
 
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
@@ -161,6 +170,7 @@ const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: 
   delete: (v) => dispatch(actionDetail.Creator.detailCommentDelete(v)),
   update: (v) => dispatch(actionDetail.Creator.detailCommentUpdate(v)),
   findByIdAndAttach: (v) => dispatch(actionDetail.Creator.detailCommentFindByIdAndAttach(v)),
+  detailPostCommentsClear: (v) => dispatch(actionDetail.Creator.detailPostCommentsClear(v)),
 })
 // export default withRouter(connect(
 //   mapStateToProps,

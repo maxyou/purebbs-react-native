@@ -25,6 +25,14 @@ function usePrevious(value: any): any {
 }
 const Post: React.FC<IState2Prop & IDispatch2Prop & Props> = (props) => {
 
+  useEffect( //退出页面时清除数据，下次进入时为空白页面，并等待从服务器刷新
+    () => {
+      return function cleanup() {
+        props.detailPostCommentsClear('')
+      }
+    }, []
+  )
+
   console.log('in DetailScreen')
   console.log(props)
   const { navigation, route } = props
@@ -95,6 +103,7 @@ interface IDispatch2Prop {
   findByIdAndDelete: (v?: any) => void,
   findByIdAndUpdate: (v: any) => void,
   findByIdAndAttach: (v?: any) => void,
+  detailPostCommentsClear: (v: any) => void,
 }
 
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
@@ -112,6 +121,7 @@ const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: 
   findByIdAndDelete: (v) => dispatch(actionPost.Creator.postFindByIdAndDelete(v)), //暂时复用post页面功能
   findByIdAndUpdate: (v) => dispatch(actionDetail.Creator.detailPostFindByIdAndUpdate(v)),
   findByIdAndAttach: (v) => dispatch(actionDetail.Creator.detailPostFindByIdAndAttach(v)),
+  detailPostCommentsClear: (v) => dispatch(actionDetail.Creator.detailPostCommentsClear(v)),
 })
 export default
   connect(
