@@ -16,20 +16,61 @@ import {
   Text,
   StatusBar,
   Image,
+  TouchableOpacity
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 // import placeHolder from '../../res/img/default.png';
 
-const ItemHeight = '60px'
-const PostTitleHeight = '40px'
-const PostInfoHeight = '20px'
+// TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
+const ButtonContainer = styled(TouchableOpacity)`
+  width: 50px;
+  height: 30px;
+  elevation: 8;
+  border-radius: 5px;
+  justifyContent: center;
+  alignItems: center;
+  backgroundColor: #77888c;
+  margin: 5px;
+`;
+
+const ButtonText = styled(Text)`
+  height: 25px;
+  font-size: 18;
+  color: #fff;
+  font-weight: bold;
+  align-self: center;
+  text-transform: uppercase;
+`;
+
+const AppButton:React.FC<{onPress:()=>void,title:string}> = ({ onPress, title }) => (
+  <ButtonContainer onPress={onPress}>
+    <ButtonText>{title}</ButtonText>
+  </ButtonContainer>
+);
 
 const StyledDivCard = styled(View)`  
   margin: 5px;
   height: 40px;
   backgroundColor: #7788cc;
   flexDirection: row;
+  justifyContent: space-between;
+  alignItems: center;
+`
+const StyledViewAvatarTitle = styled(View)`  
+  margin: 5px;
+  height: 40px;
+  backgroundColor: #7788cc;
+  flexDirection: row;
   justifyContent: flex-start;
+  alignItems: center;
+`
+const StyledButtonCommentNum = styled(View)`  
+  margin: 10px;
+  flexBasis: 60px;
+  height: 25px;
+  backgroundColor: #7738dc;
+  flexDirection: row;
+  justifyContent: center;
   alignItems: center;
 `
 
@@ -51,7 +92,7 @@ function usePrevious(value: any): any {
 }
 
 const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
-  // function postList(props) {
+  
 
   const navigation = useNavigation();
   console.log(`PostList navigation: ${navigation}`)
@@ -100,29 +141,30 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
           (v: any) => {
             console.log(v)
             return <StyledDivCard>
-              <Image
-                style={{
-                  width: 30,
-                  height: 30,
-                  resizeMode: 'contain'
-                }}
-                source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
-              />
-              <Text
-                onPress={() => {
-                  console.log('press goto detail')
-                  navigation.navigate('DetailPost', { id: v.item.postId })
-                }}
-              >
-                {JSON.stringify(v.item.title)}
-              </Text>               
-                
-                {
-                  v.item.commentNum == 0? null
-                  :<Button title={''+v.item.commentNum}
-                  onPress={()=>navigation.navigate('DetailComment', { id: v.item.postId })}
-                  />                  
-                }                
+              <StyledViewAvatarTitle>
+                <Image
+                  style={{
+                    width: 30,
+                    height: 30,
+                    resizeMode: 'contain'
+                  }}
+                  source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
+                />
+                <Text
+                  onPress={() => {
+                    console.log('press goto detail')
+                    navigation.navigate('DetailPost', { id: v.item.postId })
+                  }}
+                >
+                  {JSON.stringify(v.item.title)}
+                </Text>
+              </StyledViewAvatarTitle>
+              {
+                v.item.commentNum == 0 ? null
+                  : <AppButton title={'' + v.item.commentNum}
+                    onPress={() => navigation.navigate('DetailComment', { id: v.item.postId })}
+                  />
+              }
 
             </StyledDivCard>
           }
