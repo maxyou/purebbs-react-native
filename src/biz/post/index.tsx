@@ -11,27 +11,23 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native'
 import List from './list'
+import PostBar from './bar'
 interface Props {
   navigation: any,
   route: any
 }
 
+const StyledViewPageSelect = styled(View)`
+  height: 50px;
+`
 const PostScreen: React.FC<Props> = function (props) {
 
 
   return (
-    <View>
-      {/* <Button
-        title="Go to Detail@@@@@@@@@@@@"
-        onPress={() => {
-          console.log('press goto detail')
-          props.navigation.navigate('Detail', { id: '--id-------' })
-        }}
-      />
-      <Button
-        title="Update the title"
-        onPress={() => props.navigation.setOptions({ title: 'Updated!' })}
-      /> */}
+    <View>      
+      <StyledViewPageSelect>
+        <PostBar></PostBar>
+      </StyledViewPageSelect>      
       <List></List>
     </View>
   );
