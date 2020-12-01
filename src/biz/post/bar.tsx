@@ -12,9 +12,10 @@ import {
   Button,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet
 } from 'react-native';
-import {Round as PageRound} from '../../component'
+import { Round as PageRound, Btn } from '../../component'
 
 const StyledTOButtonContainer = styled(TouchableOpacity)`
   backgroundColor: #37688c;
@@ -31,11 +32,7 @@ const StyledTextButtonTitle = styled(Text)`
   font-size: 18px;
   color: #fff;
 `
-const AppButton: React.FC<{ onPress: () => void, title: string }> = ({ onPress, title }) => (
-  <StyledTOButtonContainer onPress={onPress}>
-    <StyledTextButtonTitle>{title}</StyledTextButtonTitle>
-  </StyledTOButtonContainer>
-)
+
 
 const StyledViewTitle = styled(View)`  
   flexShrink: 1;
@@ -54,14 +51,20 @@ const StyledDivCard = styled(View)`
   alignItems: center;
 `
 // margin: 5px;
-// backgroundColor: #77d8cc;
-const StyledViewAvatarTitle = styled(View)`  
-  height: 40px;
+const StyledViewContainer = styled(View)`  
+  backgroundColor: #77d8cc;
+  height: 55px;
   flexDirection: row;
-  justifyContent: flex-start;
+  justifyContent: space-between;
   alignItems: center;
-  flexShrink: 1;
   `
+const StyledViewRow = styled(View)`  
+  backgroundColor: #f7d8cc;
+  flexDirection: row;
+  justifyContent: center;
+  alignItems: center;
+  `
+// flexShrink: 1;
 const StyledImageAvatar = styled(Image)`
   width: 30px;
   height: 30px;
@@ -73,15 +76,31 @@ const StyledImageAvatar = styled(Image)`
 const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
 
 
-    console.log(`props.postPageCurrent:${props.postPageCurrent}`)
-    console.log(`props.postPaginateExt:${props.postPaginateExt}`)
-    console.log(`props.postTotalDocs:${props.postTotalDocs}`)
-    console.log(`props.postPageSize:${props.postPageSize}`)
+  const openCategory = ()=>{
+
+  }
+
+  // console.log(`props.postPageCurrent:${props.postPageCurrent}`)
+  // console.log(`props.postPaginateExt:${props.postPaginateExt}`)
+  // console.log(`props.postTotalDocs:${props.postTotalDocs}`)
+  // console.log(`props.postPageSize:${props.postPageSize}`)
 
   return (
-    <View>
-      <PageRound current={props.postPageCurrent} ext={props.postPaginateExt} totalDocs={props.postTotalDocs} pageSize={props.postPageSize} nav={props.nav}></PageRound>
-    </View>
+    <StyledViewContainer>      
+      <Btn 
+          Outer={StyledTOButtonContainer}
+          Inner={StyledTextButtonTitle}
+          onPress={()=>null}
+          title='Add' />
+      <StyledViewRow>
+        <PageRound current={props.postPageCurrent} ext={props.postPaginateExt} totalDocs={props.postTotalDocs} pageSize={props.postPageSize} nav={props.nav}></PageRound>
+        <Btn 
+          Outer={StyledTOButtonContainer}
+          Inner={StyledTextButtonTitle}
+          onPress={openCategory} 
+          title='Category' />
+      </StyledViewRow>
+    </StyledViewContainer>
   )
 }
 interface Props {
@@ -101,24 +120,24 @@ interface IState2Prop {
   postPaginateExt: number,
 }
 interface IDispatch2Prop {
-    changePageSize: (v?:any) => void,
-    categoryNav: (v?:any) => void,
-    nav: (v:any) => void,
+  changePageSize: (v?: any) => void,
+  categoryNav: (v?: any) => void,
+  nav: (v: any) => void,
 }
 
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
-    words: state.locale.words,
-    user: state.user,
-    postPageSize: state.post.postPageSize,
-    postPageCurrent: state.post.postPageCurrent,
-    postTotalDocs: state.post.postTotalDocs,
-    postPaginateExt: state.post.postPaginateExt,
+  words: state.locale.words,
+  user: state.user,
+  postPageSize: state.post.postPageSize,
+  postPageCurrent: state.post.postPageCurrent,
+  postTotalDocs: state.post.postTotalDocs,
+  postPaginateExt: state.post.postPaginateExt,
 })
 
 const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: Dispatch) => ({
-    changePageSize: (v) => dispatch(actionPost.Creator.postChangePageSize(v)),
-    categoryNav: (v) => dispatch(actionPost.Creator.postCategoryNav(v)),
-    nav: (v) => dispatch(actionPost.Creator.postNav(v))
+  changePageSize: (v) => dispatch(actionPost.Creator.postChangePageSize(v)),
+  categoryNav: (v) => dispatch(actionPost.Creator.postCategoryNav(v)),
+  nav: (v) => dispatch(actionPost.Creator.postNav(v))
 })
 // export default withRouter(connect(
 //   mapStateToProps,

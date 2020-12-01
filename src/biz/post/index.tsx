@@ -25,9 +25,9 @@ const PostScreen: React.FC<Props> = function (props) {
 
   return (
     <View>      
-      <StyledViewPageSelect>
+      {/* <StyledViewPageSelect> */}
         <PostBar></PostBar>
-      </StyledViewPageSelect>      
+      {/* </StyledViewPageSelect>       */}
       <List></List>
     </View>
   );

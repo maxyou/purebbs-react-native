@@ -15,9 +15,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { Round as PageRound, Btn } from '../../component'
 
 const StyledTOButtonContainer = styled(TouchableOpacity)`
-  backgroundColor: #37688c;
+  backgroundColor: #77684c;
   elevation: 8;
   width: 50px;
   height: 30px;
@@ -31,11 +32,6 @@ const StyledTextButtonTitle = styled(Text)`
   font-size: 18px;
   color: #fff;
 `
-const AppButton: React.FC<{ onPress: () => void, title: string }> = ({ onPress, title }) => (
-  <StyledTOButtonContainer onPress={onPress}>
-    <StyledTextButtonTitle>{title}</StyledTextButtonTitle>
-  </StyledTOButtonContainer>
-)
 
 const StyledViewTitle = styled(View)`  
   flexShrink: 1;
@@ -159,7 +155,10 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
               {
                 v.item.commentNum == 0 ? null
                   :
-                  <AppButton title={'' + v.item.commentNum}
+                  <Btn 
+                    Outer={StyledTOButtonContainer}
+                    Inner={StyledTextButtonTitle}
+                    title={'' + v.item.commentNum}
                     onPress={() => navigation.navigate('DetailComment', { id: v.item.postId })}
                   />
               }
