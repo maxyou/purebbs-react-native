@@ -135,7 +135,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
         data={dataSource}
         renderItem={
           (v: any) => {
-            console.log(v)
+            // console.log(v)
             return <StyledDivCard>
 
               <StyledViewAvatarTitle>

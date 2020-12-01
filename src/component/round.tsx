@@ -32,7 +32,7 @@ interface IDispatch2Prop {
 
 function PageRound({ current, ext, totalDocs, pageSize, nav }: IState2Prop & IDispatch2Prop) {
 
-    // console.log('-------------pageRound---------------')
+    console.log('-------------pageRound---------------')
     // console.log(current)
     // console.log(ext)
     // console.log(totalDocs)
@@ -46,7 +46,7 @@ function PageRound({ current, ext, totalDocs, pageSize, nav }: IState2Prop & IDi
     // console.log(current)
     // console.log(ext)
     // console.log(maxRight)
-    // console.log(ba)
+    console.log(ba)
 
     return (
         <StyledViewContainner>

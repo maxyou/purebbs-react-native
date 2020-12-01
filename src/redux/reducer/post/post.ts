@@ -16,7 +16,7 @@ interface IState {
 }
 
 const initState:IState = {
-  postPageSize: 20,
+  postPageSize: 10,
   postPageCurrent: 1,
   postPaginateExt: 3,
   postTotalDocs: 0,

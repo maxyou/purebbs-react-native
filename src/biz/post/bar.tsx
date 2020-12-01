@@ -73,6 +73,10 @@ const StyledImageAvatar = styled(Image)`
 const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
 
 
+    console.log(`props.postPageCurrent:${props.postPageCurrent}`)
+    console.log(`props.postPaginateExt:${props.postPaginateExt}`)
+    console.log(`props.postTotalDocs:${props.postTotalDocs}`)
+    console.log(`props.postPageSize:${props.postPageSize}`)
 
   return (
     <View>
