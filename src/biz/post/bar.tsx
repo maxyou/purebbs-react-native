@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from "react";
 import { Component, useEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux'
@@ -13,43 +13,68 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Modal,
 } from 'react-native';
 import { Round as PageRound, Btn } from '../../component'
 
-const StyledTOButtonContainer = styled(TouchableOpacity)`
-  backgroundColor: #37688c;
-  elevation: 8;
-  width: 50px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;  
-  justifyContent: center;
-  alignItems: center;
-  `
-const StyledTextButtonTitle = styled(Text)`
-  height: 25px;
-  font-size: 18px;
-  color: #fff;
-`
+const styles = StyleSheet.create({
+  toStyle: {
+    backgroundColor: '#37688c',
+    elevation: 8,
+    width: 60,
+    height: 30,
+    borderRadius: 5,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtStyle: {
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    width: 250,
+    height: 300,
+    justifyContent: "center",
+    margin: 20,
+    backgroundColor: "#785634",
+    borderRadius: 30,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 6.84,
+    elevation: 5
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
+});
 
 
-const StyledViewTitle = styled(View)`  
-  flexShrink: 1;
-  marginLeft: 5px;
-`
-const StyledTextTitle = styled(Text)`
-`
-
-// margin: 5px;
-const StyledDivCard = styled(View)`  
-  backgroundColor: #d7c8cc;
-  marginBottom: 1px;
-  height: 45px;
-  flexDirection: row;
-  justifyContent: space-between;
-  alignItems: center;
-`
 // margin: 5px;
 const StyledViewContainer = styled(View)`  
   backgroundColor: #77d8cc;
@@ -64,20 +89,13 @@ const StyledViewRow = styled(View)`
   justifyContent: center;
   alignItems: center;
   `
-// flexShrink: 1;
-const StyledImageAvatar = styled(Image)`
-  width: 30px;
-  height: 30px;
-  borderRadius: 20px;
-  marginLeft: 5px;
-  `
-
 
 const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
 
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const openCategory = ()=>{
-
+  const openCategory = () => {
+    setModalVisible(true)
   }
 
   // console.log(`props.postPageCurrent:${props.postPageCurrent}`)
@@ -86,20 +104,47 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
   // console.log(`props.postPageSize:${props.postPageSize}`)
 
   return (
-    <StyledViewContainer>      
-      <Btn 
-          Outer={StyledTOButtonContainer}
-          Inner={StyledTextButtonTitle}
-          onPress={()=>null}
-          title='Add' />
+    <StyledViewContainer>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Hello World!</Text>
+
+            <Btn
+              toStyle={styles.openButton}
+              txtStyle={styles.textStyle}
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              title='in modal'
+            >
+            </Btn>
+          </View>
+        </View>
+      </Modal>
+
+      <Btn
+        toStyle={styles.toStyle}
+        txtStyle={styles.txtStyle}
+        onPress={() => null}
+        title='Add' />
+      
       <StyledViewRow>
         <PageRound current={props.postPageCurrent} ext={props.postPaginateExt} totalDocs={props.postTotalDocs} pageSize={props.postPageSize} nav={props.nav}></PageRound>
-        <Btn 
-          Outer={StyledTOButtonContainer}
-          Inner={StyledTextButtonTitle}
-          onPress={openCategory} 
+        <Btn
+          toStyle={styles.toStyle}
+          txtStyle={styles.txtStyle}
+          onPress={openCategory}
           title='Category' />
       </StyledViewRow>
+
     </StyledViewContainer>
   )
 }

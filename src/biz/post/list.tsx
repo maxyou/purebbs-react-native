@@ -12,7 +12,8 @@ import {
   Button,
   Text,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { Round as PageRound, Btn } from '../../component'
@@ -65,6 +66,23 @@ const StyledImageAvatar = styled(Image)`
   marginLeft: 5px;
   `
 // resizeMode: 'contain';
+
+const styles = StyleSheet.create({
+  toStyle: {
+    backgroundColor: '#37688c',
+    elevation: 8,
+    width: 40,
+    height: 30,
+    borderRadius: 5,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtStyle: {
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+});
 
 function useIdAsKey(postListResult: any): any {
 
@@ -151,13 +169,13 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                   </StyledTextTitle>
                 </StyledViewTitle>
               </StyledViewAvatarTitle>
-              
+
               {
                 v.item.commentNum == 0 ? null
                   :
-                  <Btn 
-                    Outer={StyledTOButtonContainer}
-                    Inner={StyledTextButtonTitle}
+                  <Btn
+                    toStyle={styles.toStyle}
+                    txtStyle={styles.txtStyle}
                     title={'' + v.item.commentNum}
                     onPress={() => navigation.navigate('DetailComment', { id: v.item.postId })}
                   />
