@@ -4,7 +4,7 @@ import "regenerator-runtime/runtime";
 import { put, takeEvery, all, call } from 'redux-saga/effects'
 import {detail as serviceDetail} from '../../../service'
 import {detail as actionDetail, extend as actionExtend} from '../../action'
-import {IAction} from '../../common'
+import {IAction} from '../../../common'
 
 function* detailPostGet(action:IAction) {    
     console.log('====detail post get 1');

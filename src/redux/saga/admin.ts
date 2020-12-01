@@ -6,7 +6,7 @@ import {admin as serviceAdmin} from '../../service'
 // console.log('serviceAdmin:')
 // console.log(serviceAdmin)
 import {admin as actionAdmin} from '../action'
-import {IAction} from '../common'
+import {IAction} from '../../common'
 
 function* userAdd(action:IAction) {
     // console.log('====user Sagas 1');

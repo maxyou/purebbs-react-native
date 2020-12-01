@@ -1,4 +1,4 @@
-import { IExtendState } from '../redux/common'
+import { IExtendState } from '../common'
 var path = require('path');
 import {sys} from '../config'
 /**

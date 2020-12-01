@@ -4,7 +4,7 @@ import "regenerator-runtime/runtime";
 import { put, takeEvery, all, call } from 'redux-saga/effects'
 import {extend as serviceExtend} from '../../service'
 import {extend as actionExtend} from '../action'
-import {IAction} from '../common'
+import {IAction} from '../../common'
 
 function* extendLineupJoin(action:IAction) {
     // console.log('====extend lineup join 1');

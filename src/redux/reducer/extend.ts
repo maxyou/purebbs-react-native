@@ -1,5 +1,5 @@
 import { extend as actionExtend } from '../action'
-import { IExtendState as IState } from '../common'
+import { IExtendState as IState } from '../../common'
 // interface IState {
 //    //add extend activity
 //    addChoice: string,

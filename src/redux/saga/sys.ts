@@ -4,7 +4,7 @@ import "regenerator-runtime/runtime";
 import { put, takeEvery, all, call } from 'redux-saga/effects'
 import {sys as serviceSys} from '../../service'
 import {sys as actionSys} from '../action'
-import {IAction} from '../common'
+import {IAction} from '../../common'
 
 function* categoryGet(action:IAction) {
     // console.log('====sys categoryGet 1');

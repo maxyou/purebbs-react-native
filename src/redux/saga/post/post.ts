@@ -6,7 +6,7 @@ import {post as servicePost} from '../../../service'
 // console.log('servicePost:')
 // console.log(servicePost)
 import {post as actionPost} from '../../action'
-import {IAction} from '../../common'
+import {IAction} from '../../../common'
 
 function* postAdd(action:IAction) {
     // console.log('====post Sagas 1');

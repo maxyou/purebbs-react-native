@@ -17,6 +17,7 @@ import {
   Modal,
 } from 'react-native';
 import { Round as PageRound, Btn } from '../../component'
+import Board from './board'
 
 const styles = StyleSheet.create({
   toStyle: {
@@ -40,11 +41,10 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    width: 250,
-    height: 300,
+    width: 250,    
     justifyContent: "center",
     margin: 20,
-    backgroundColor: "#785634",
+    backgroundColor: "#a896c4",
     borderRadius: 30,
     padding: 35,
     alignItems: "center",
@@ -115,9 +115,10 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            {/* <Text style={styles.modalText}>Hello World!</Text> */}
+            <Board categorySelected={() => {setModalVisible(false)}}></Board>
 
-            <Btn
+            {/* <Btn
               toStyle={styles.openButton}
               txtStyle={styles.textStyle}
               onPress={() => {
@@ -125,7 +126,7 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
               }}
               title='in modal'
             >
-            </Btn>
+            </Btn> */}
           </View>
         </View>
       </Modal>

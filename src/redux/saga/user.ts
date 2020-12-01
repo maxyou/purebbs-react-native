@@ -4,7 +4,7 @@ import "regenerator-runtime/runtime";
 import { put, takeEvery, all, call } from 'redux-saga/effects'
 import {user as serviceUser} from '../../service'
 import {user as actionUser} from '../action'
-import {IAction} from '../common'
+import {IAction} from '../../common'
 
 function* userGetStatus(action:IAction) {
     // console.log('====userGetStatus Sagas 1');
