@@ -39,7 +39,7 @@ const StyledDivLogin = styled(View)`
     justifyContent: center;
     backgroundColor: lightblue;
 `
-const Login = function (props: IState2Prop & IDispatch2Prop & IRouterProp) {
+const Login = function (props: IState2Prop & IDispatch2Prop & Props) {
 
   function handleSubmit(e: any) {
     console.log('login submit')
@@ -69,7 +69,9 @@ const Login = function (props: IState2Prop & IDispatch2Prop & IRouterProp) {
       }
 
       console.log('useEffect to redirect to /post')
-      props.history.push('/post')
+      // props.history.push('/post')
+      props.navigation.goBack()
+
     }
   }, [props.user.isLogin])
 
@@ -119,9 +121,9 @@ const Login = function (props: IState2Prop & IDispatch2Prop & IRouterProp) {
     </StyledDivLogin>
   );
 }
-interface IRouterProp {
-  history: any,
-  match: any,
+interface Props {
+  navigation: any,
+  route: any
 }
 interface IState2Prop {
   user: any,
