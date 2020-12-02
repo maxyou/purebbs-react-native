@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native'
 import List from './list'
-import PostBar from './bar'
+import PostPaging from './paging'
 interface Props {
   navigation: any,
   route: any
@@ -21,12 +21,18 @@ const StyledViewPageSelect = styled(View)`
   height: 50px;
 `
 const PostScreen: React.FC<Props> = function (props) {
-
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => props.navigation.navigate('Login')} title="User" />
+      ),
+    });
+  }, []);
 
   return (
     <View>      
       {/* <StyledViewPageSelect> */}
-        <PostBar></PostBar>
+        <PostPaging></PostPaging>
       {/* </StyledViewPageSelect>       */}
       <List></List>
     </View>
