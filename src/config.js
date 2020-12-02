@@ -2,7 +2,7 @@ var path = require('path');
 
 const sys = {
     // appRoot: path.resolve(__dirname),
-    appHomepage: `http://192.168.31.70:3001`,
+    appHomepage: 'http://192.168.31.70:3001',
     graphql_endpoint: '/graphql'
 }
 

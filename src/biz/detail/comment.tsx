@@ -106,7 +106,7 @@ const Comment: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
         data={dataSource}
         renderItem={
           (v: any) => {
-            console.log(v)
+            console.log(calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id))
             return <StyledDivCard>
 
               <StyledImageAvatar

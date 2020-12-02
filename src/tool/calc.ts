@@ -1,5 +1,5 @@
 import { IExtendState } from '../common'
-var path = require('path');
+var urljoin = require('url-join');
 import {sys} from '../config'
 /**
  * todo 这里遗留一个问题
@@ -22,7 +22,7 @@ export default {
         return v
     },
     addAvatarApiPath(fileName:string){
-        return path.join(API_PATH_AVATAR, fileName)
+        return urljoin(API_PATH_AVATAR, fileName)
     },
     getAvatarPathFromUser(user: any) {
         if (user.source === 'oauth') {
@@ -35,6 +35,10 @@ export default {
             }
         }
     },
+    calcVerifyCodePath(random?:string):string{
+        console.log(`calcVerifyCodePath:${urljoin(sys.appHomepage, '/tool/verify','?mt=',random)}`)
+        return urljoin(sys.appHomepage, '/tool/verify','?mt=',random)
+    },
     calcAvatarPath(
         user: any,
         anonymous: boolean,
@@ -46,11 +50,11 @@ export default {
         // console.log(isMyself)
         if (anonymous) {
             if (isMyself) {
-                // console.log(path.join(sys.appHomepage, API_PATH_AVATAR + 'myanonymous.png'))
-                return path.join(sys.appHomepage, API_PATH_AVATAR + 'myanonymous.png')
+                // console.log(urljoin(sys.appHomepage, API_PATH_AVATAR + 'myanonymous.png'))
+                return urljoin(sys.appHomepage, API_PATH_AVATAR + 'myanonymous.png')
             } else {
-                // console.log(path.join(sys.appHomepage, API_PATH_AVATAR + 'anonymous.png'))
-                return path.join(sys.appHomepage, API_PATH_AVATAR + 'anonymous.png')
+                // console.log(urljoin(sys.appHomepage, API_PATH_AVATAR + 'anonymous.png'))
+                return urljoin(sys.appHomepage, API_PATH_AVATAR + 'anonymous.png')
             }
         } else {
             if (user.source === 'oauth') {
@@ -58,11 +62,11 @@ export default {
                 return user.oauth.avatarUrl
             } else {//暂时认为只有 oauth 及 register 两类                
                 if (user.avatarFileName) {
-                    // console.log(path.join(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName))
-                    return path.join(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName)
+                    console.log(urljoin(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName))
+                    return urljoin(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName)
                 } else {
-                    // console.log(path.join(sys.appHomepage,  API_PATH_AVATAR + 'default.png'))
-                    return path.join(sys.appHomepage,  API_PATH_AVATAR + 'default.png')
+                    // console.log(urljoin(sys.appHomepage,  API_PATH_AVATAR + 'default.png'))
+                    return urljoin(sys.appHomepage,  API_PATH_AVATAR + 'default.png')
                 }
             }
         }
