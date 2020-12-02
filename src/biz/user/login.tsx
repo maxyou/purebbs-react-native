@@ -26,9 +26,9 @@ const StyledTextPrompt = styled(Text)`
   color: #127834;
   `
 const StyledTextInput = styled(TextInput)`
-  width: 100px;
-  height: 30px;
-  backgroundColor: #778899;
+  width: 150px;
+  height: 40px;
+  backgroundColor: #eee;
   `
 const StyledImageVerifyCode = styled(Image)`
   width: 100px;
@@ -43,7 +43,7 @@ const Login = function (props: IState2Prop & IDispatch2Prop & IRouterProp) {
 
   function handleSubmit(e: any) {
     console.log('login submit')
-    e.preventDefault()
+    // e.preventDefault()
     props.login({ name: name, password: password, code: code })
   }
 

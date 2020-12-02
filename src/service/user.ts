@@ -1,54 +1,54 @@
-import axios from 'axios'
+import httpApi from '../tool/net'
 import cookies from 'react-cookies'
 
-axios.defaults.headers.common['x-csrf-token'] = cookies.load('csrfToken');
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+httpApi.defaults.headers.common['x-csrf-token'] = cookies.load('csrfToken');
+httpApi.defaults.headers.post['Content-Type'] = 'application/json';
 
 export default {
 
   register(user:any) {
     console.log('service user register')
-    return axios.post('/user/register', user)
+    return httpApi.post('/user/register', user)
   },
   login(user:any) {
     console.log('service user login')
-    return axios.post('/user/login', user)
+    return httpApi.post('/user/login', user)
   },
   logout(v:any) {
     console.log('service user logout')
-    return axios.post('/user/logout', v)
+    return httpApi.post('/user/logout', v)
   },
   getStatus(v:any) {
     console.log('service user status')
-    return axios.get('/user/status')
+    return httpApi.get('/user/status')
   },
   getOtherInfo(v:any) {
     console.log('service other user info')
     console.log(v)
-    return axios.get('/user/other/info', { params: {user:JSON.stringify(v) }})
+    return httpApi.get('/user/other/info', { params: {user:JSON.stringify(v) }})
   },
   // uploadAvatar(v) {
   //   console.log('service user upload')
-  //   return axios.post('/user/upload/avatar', v)
+  //   return httpApi.post('/user/upload/avatar', v)
   // },
   updateAvatar(v:any) {
     console.log('service user upload')
-    return axios.post('/user/upload/avatar', v)
+    return httpApi.post('/user/upload/avatar', v)
   },
   userUpdate(v:any) {
     console.log('service user update')
-    return axios.post('/user/update', v)
+    return httpApi.post('/user/update', v)
   },
   userChangePassword(v:any) {
     console.log('service user userChangePassword')
-    return axios.post('/user/password/change', v)
+    return httpApi.post('/user/password/change', v)
   },
   userResetPassword(v:any) {
     console.log('service user userResetPassword')
-    return axios.post('/user/password/reset', v)
+    return httpApi.post('/user/password/reset', v)
   },
   userResetPasswordNew(v:any) {
     console.log('service user userResetPassword')
-    return axios.post('/user/password/new', v)
+    return httpApi.post('/user/password/new', v)
   },
 }
