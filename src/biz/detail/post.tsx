@@ -16,6 +16,10 @@ import {
 } from 'react-native';
 import styled from 'styled-components/native'
 
+const StyledViewContainer = styled(View)`
+  padding: 10px;
+`
+
 function usePrevious(value: any): any {
   const ref = useRef();
   useEffect(() => {
@@ -59,7 +63,7 @@ const Post: React.FC<IState2Prop & IDispatch2Prop & Props> = (props) => {
   )
 
   return (
-    <View>
+    <StyledViewContainer>
       {/* <Text>DetailScreen</Text>
       <Text>id:{id}</Text>
       <Button
@@ -77,7 +81,7 @@ const Post: React.FC<IState2Prop & IDispatch2Prop & Props> = (props) => {
           </Text> : null
         }
       </View>
-    </View>
+    </StyledViewContainer>
   );
 }
 
