@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PostScreen from '../biz/post'
+import AddScreen from '../biz/post/add'
 import {Login, Register, UserInfo} from '../biz/user'
 import { post as DetailPost, comment as DetailComment } from '../biz/detail'
 import { Modal } from '../biz/try'
@@ -42,6 +43,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
         <Stack.Screen name="Register" component={Register} options={{ title: 'Register' }} />
         <Stack.Screen name="UserInfo" component={UserInfo} options={{ title: 'UserInfo' }} />
+        <Stack.Screen name="AddScreen" component={AddScreen} options={{ title: 'AddScreen' }} />
         <Stack.Screen name="Modal" component={Modal} options={{ title: 'Modal' }} />
       </Stack.Navigator>
     </NavigationContainer>

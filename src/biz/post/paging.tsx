@@ -91,8 +91,9 @@ const StyledViewRow = styled(View)`
   alignItems: center;
   `
 
-const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
+const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
 
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
   const openCategory = () => {
@@ -135,7 +136,7 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
       <Btn
         toStyle={styles.toStyle}
         txtStyle={styles.txtStyle}
-        onPress={() => null}
+        onPress={() => navigation.navigate('AddScreen')}
         title='Add' />
       
       <StyledViewRow>
