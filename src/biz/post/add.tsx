@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { user as actionUser, post as actionPost, locale as actionLocale, detail as actionDetail } from '../../redux/action'
 // import ResetPwd from './resetpwd'
 // import {FieldSet} from 'component/style'
+import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Button,
@@ -41,29 +42,31 @@ const StyledDivLogin = styled(View)`
 `
 const AddPost = function (props: IState2Prop & IDispatch2Prop & Props) {
 
+  const navigation = useNavigation();
+  const [random, setRandom] = useState(0)
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [code, setCode] = useState('')
 
-    const [random, setRandom] = useState(0)
-    const [title, setTitle] = useState('')
-    const [content, setContent] = useState('')
-    const [code, setCode] = useState('')
-
-    function handleSubmit(e: any) {
+  function handleSubmit(e: any) {
 
     props.submit({
-        title: title,
-        content: content,
-        category: 'category_dev_client',
-        anonymous: false,
-        extend: null,
-        // author: user.result && user.result.data && user.result.data.name,
-        // authorId: user.result && user.result.data && user.result.data._id,
+      title: title,
+      content: content,
+      category: 'category_dev_client',
+      anonymous: false,
+      extend: null,
+      // author: user.result && user.result.data && user.result.data.name,
+      // authorId: user.result && user.result.data && user.result.data._id,
     })
+
+    navigation.goBack()
   }
 
 
 
-//   console.log('calc.calcVerifyCodePath()')
-//   console.log(calc.calcVerifyCodePath(''+random))
+  //   console.log('calc.calcVerifyCodePath()')
+  //   console.log(calc.calcVerifyCodePath(''+random))
 
   return (
     <StyledDivLogin>
@@ -82,7 +85,7 @@ const AddPost = function (props: IState2Prop & IDispatch2Prop & Props) {
 
 
       <View>
-        <Button title={props.words.user_login} onPress={handleSubmit} />
+        <Button title={props.words.cmn_confirm} onPress={handleSubmit} />
       </View>
 
 
@@ -94,33 +97,33 @@ interface Props {
   route: any
 }
 interface IDispatch2Prop {
-    submit: (v:any) => void,
+  submit: (v: any) => void,
 }
 
 type IState2Prop = {
-    addResult: object,
-    words: any,
-    user: any,
-    extend: any,
+  addResult: object,
+  words: any,
+  user: any,
+  extend: any,
 };
 
 type State = {
-    title: string,
-    content: string,
-    category: string,
-    anonymous: boolean,
-    markdownTab: "write"|"preview"|undefined,
+  title: string,
+  content: string,
+  category: string,
+  anonymous: boolean,
+  markdownTab: "write" | "preview" | undefined,
 };
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
-    addResult: state.post.postAddResult,
-    words: state.locale.words,
-    user: state.user,
-    extend: state.extend,
-    category: state.sys.category,
+  addResult: state.post.postAddResult,
+  words: state.locale.words,
+  user: state.user,
+  extend: state.extend,
+  category: state.sys.category,
 })
 
 const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: Dispatch) => ({
-    submit: (v) => dispatch(actionPost.Creator.postAdd(v)),
+  submit: (v) => dispatch(actionPost.Creator.postAdd(v)),
 })
 export default connect(
   mapStateToProps,
