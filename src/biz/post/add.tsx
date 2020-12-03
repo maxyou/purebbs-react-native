@@ -22,22 +22,41 @@ import SvgUri from 'react-native-svg-uri';
 
 const appConfig = require('../../config')
 
-const StyledTextPrompt = styled(Text)`
-  height: 30px;
+const StyledViewMarkdownContainer = styled(View)`
+  flexGrow: 1;
+  color: #127834;
+  backgroundColor: #f2a8c4;
+  `
+const StyledViewButton = styled(View)`
+  height: 45px;
   color: #127834;
   `
+const StyledViewTitle = styled(View)`
+  height: 85px;
+  color: #127834;
+  backgroundColor: #c2aac4;
+  `
 const StyledTextInput = styled(TextInput)`
-  width: 150px;
   height: 40px;
   backgroundColor: #eee;
+  margin: 2px;
+  `
+  // padding: 5px;
+  const StyledTextInputMultLine = styled(TextInput)`
+  margin: 2px;
+  flexGrow: 1;
+  backgroundColor: #eee;
+  textAlign: left;
+  textAlignVertical: top;
   `
 const StyledImageVerifyCode = styled(Image)`
   width: 100px;
   height: 50px;
   `
-const StyledDivLogin = styled(View)`
-  padding: 10px;
-    justifyContent: center;
+const StyledViewContainer = styled(View)`
+  height: 100%;
+  padding: 2px;
+    justifyContent: space-between;
     backgroundColor: lightblue;
 `
 const AddPost = function (props: IState2Prop & IDispatch2Prop & Props) {
@@ -63,33 +82,27 @@ const AddPost = function (props: IState2Prop & IDispatch2Prop & Props) {
     navigation.goBack()
   }
 
-
-
-  //   console.log('calc.calcVerifyCodePath()')
-  //   console.log(calc.calcVerifyCodePath(''+random))
-
   return (
-    <StyledDivLogin>
-      {/* <Text>{props.words.user_login}</Text> */}
+    <StyledViewContainer>
+
+      {/* <StyledViewTitle> */}
+        {/* <Text >{props.words.cntnt_title}: </Text> */}
+        <StyledTextInput onChangeText={text => setTitle(text)} value={title} placeholder={'title'} />
+      {/* </StyledViewTitle> */}
+
+      {/* <StyledViewMarkdownContainer> */}
+        {/* <Text >{props.words.cntnt_content}: </Text> */}
+        <StyledTextInputMultLine onChangeText={text => setContent(text)} value={content} 
+          multiline={true} placeholder={'content'} />
+      {/* </StyledViewMarkdownContainer> */}
 
 
-      <View>
-        <Text >{props.words.cntnt_title}: </Text>
-        <StyledTextInput onChangeText={text => setTitle(text)} value={title} />
-      </View>
-
-      <View>
-        <Text >{props.words.cntnt_content}: </Text>
-        <StyledTextInput onChangeText={text => setContent(text)} value={content} />
-      </View>
-
-
-      <View>
+      {/* <StyledViewButton> */}
         <Button title={props.words.cmn_confirm} onPress={handleSubmit} />
-      </View>
+      {/* </StyledViewButton> */}
 
 
-    </StyledDivLogin>
+    </StyledViewContainer>
   );
 }
 interface Props {
