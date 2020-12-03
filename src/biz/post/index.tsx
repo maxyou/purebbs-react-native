@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux'
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,14 +22,22 @@ interface Props {
 const StyledViewPageSelect = styled(View)`
   height: 50px;
 `
-const PostScreen: React.FC<Props> = function (props) {
+
+
+const PostScreen: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
+
+  const {user} = props
+
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <Button onPress={() => props.navigation.navigate('Login')} title="User" />
+        user.isLogin?
+        <Button onPress={() => props.navigation.navigate('UserInfo')} title="User" />
+        :
+        <Button onPress={() => props.navigation.navigate('Login')} title="Login" />
       ),
     });
-  }, []);
+  }, [user.isLogin]);
 
   return (
     <View>      
@@ -40,4 +50,23 @@ const PostScreen: React.FC<Props> = function (props) {
 };
 
 
-export default PostScreen;
+// export default PostScreen;
+interface IState2Prop {
+  user: any,
+  words: any,
+}
+interface IDispatch2Prop {
+}
+
+const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
+  user: state.user,
+  words: state.locale.words,
+})
+
+const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: Dispatch) => ({
+})
+export default
+(connect(
+  mapStateToProps,
+  mapDispatchToProps
+) as any) (PostScreen)
