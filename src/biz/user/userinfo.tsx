@@ -16,7 +16,38 @@ import {
   Modal,
   TextInput
 } from 'react-native';
+import { Btn } from '../../component'
 
+const styles = StyleSheet.create({
+  toStyle: {
+    width: '70%',
+    backgroundColor: '#37688c',
+    elevation: 8,
+    height: 30,
+    borderRadius: 5,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtStyle: {
+    textAlign: 'center',
+    marginVertical: 8,
+  },
+});
+
+const StyledViewContainer = styled(View)`
+  padding: 10px;
+  justifyContent: center;
+  backgroundColor: lightblue;
+  alignItems: center;
+`
+const StyledViewInfo = styled(View)`
+  width: 80%;
+  padding: 10px;
+  justifyContent: center;
+  backgroundColor: lightgreen;
+  alignItems: stretch;
+`
 function usePrevious(value: any): any {
   const ref = useRef();
   useEffect(() => {
@@ -64,15 +95,17 @@ const UserInfo: React.FC<IState2Prop & IDispatch2Prop> = function (props: IState
 
 
   return (
-    <View>
+    <StyledViewContainer>
       {/* <AvatarImg width='35px' src={props.user.avatarPath} /> */}
-      <Text>{props.words.user_name}: {props.user.name}</Text>
-      <Text>{props.words.user_role}: {props.user.role}</Text>
-      <Text>{props.words.user_email}: {props.user.email}</Text>
-      <Text>{props.words.cmn_created}: {time.fromNow(props.user.created)}</Text>
+      <StyledViewInfo>
+        <Text>{props.words.user_name}: {props.user.name}</Text>
+        <Text>{props.words.user_role}: {props.user.role}</Text>
+        <Text>{props.words.user_email}: {props.user.email}</Text>
+        <Text>{props.words.cmn_created}: {time.fromNow(props.user.created)}</Text>
+      </StyledViewInfo>
       {/* {props.user.source === 'register' ? <button onClick={gotoEdit}> {props.words.cmn_edit}</button> : null} */}
-      <Button title={props.words.user_logout} onPress={logout} />
-    </View>
+      <Btn title={props.words.user_logout} onPress={logout} toStyle={styles.toStyle} txtStyle={styles.txtStyle} />
+    </StyledViewContainer>
   );
 }
 
