@@ -8,47 +8,84 @@ import {
   View,
   Button,
   Text,
+  Image,
   StatusBar,
-  PermissionsAndroid
+  PermissionsAndroid,
+  TouchableOpacity
 } from 'react-native';
 import styled from 'styled-components/native'
+import { Btn } from '../../component'
 import List from './list'
 import PostPaging from './paging'
-interface Props {
-  navigation: any,
-  route: any
-}
+import { calc, time } from '../../tool'
+
+const styles = StyleSheet.create({
+  toStyle: {
+    backgroundColor: '#37688c',
+    elevation: 8,
+    width: 50,
+    height: 30,
+    borderRadius: 5,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtStyle: {
+    textAlign: 'center',
+    marginVertical: 8,
+    color: '#fff',
+  },
+});
 
 const StyledViewPageSelect = styled(View)`
   height: 50px;
 `
 
-
+const StyledImageAvatar = styled(Image)`
+  width: 40px;
+  height: 40px;
+  borderRadius: 20px;
+  marginRight: 10px;
+  `
 const PostScreen: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
 
-  const {user} = props
+  const { user } = props
 
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        user.isLogin?
-        <Button onPress={() => props.navigation.navigate('UserInfo')} title="User" />
-        :
-        <Button onPress={() => props.navigation.navigate('Login')} title="Login" />
+        user.isLogin ? <>
+          <TouchableOpacity onPress={() => props.navigation.navigate('UserInfo')}>
+            <StyledImageAvatar source={{ uri: calc.getUserAvatarPath(props.user) }} />
+          </TouchableOpacity>
+          {/* <Button onPress={() => props.navigation.navigate('UserInfo')} title="User" /> */}
+        </>
+          :
+          // <Button onPress={() => props.navigation.navigate('Login')} title="Login" />
+          <Btn
+            toStyle={styles.toStyle}
+            txtStyle={styles.txtStyle}
+            title={props.words.user_login}
+            onPress={() => props.navigation.navigate('Login')}
+          />
       ),
     });
   }, [user.isLogin]);
 
   return (
-    <View>      
+    <View>
       {/* <StyledViewPageSelect> */}
-        <PostPaging></PostPaging>
+      <PostPaging></PostPaging>
       {/* </StyledViewPageSelect>       */}
       <List></List>
     </View>
   );
 };
 
+interface Props {
+  navigation: any,
+  route: any
+}
 
 // export default PostScreen;
 interface IState2Prop {
@@ -66,7 +103,7 @@ const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
 const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: Dispatch) => ({
 })
 export default
-(connect(
-  mapStateToProps,
-  mapDispatchToProps
-) as any) (PostScreen)
+  (connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ) as any)(PostScreen)

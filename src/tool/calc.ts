@@ -24,14 +24,19 @@ export default {
     addAvatarApiPath(fileName:string){
         return urljoin(API_PATH_AVATAR, fileName)
     },
+    getUserAvatarPath(user:any){
+        return urljoin(sys.appHomepage, user.avatarPath)
+    },
     getAvatarPathFromUser(user: any) {
+        console.log('===========user')
+        console.log(user)
         if (user.source === 'oauth') {
             return user.oauth.avatarUrl
         } else {//暂时认为只有 oauth 及 register 两类                
             if (user.avatarFileName) {
-                return API_PATH_AVATAR + user.avatarFileName
+                return urljoin(sys.appHomepage, API_PATH_AVATAR, user.avatarFileName)
             } else {
-                return API_PATH_AVATAR + 'default.png'
+                return urljoin(sys.appHomepage, API_PATH_AVATAR, 'default.png')
             }
         }
     },
