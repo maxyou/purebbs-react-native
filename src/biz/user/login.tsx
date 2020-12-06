@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { calc } from '../../tool';
 import SvgUri from 'react-native-svg-uri';
-
+import { Btn } from '../../component'
 
 const appConfig = require('../../config')
 
@@ -114,6 +114,7 @@ const Login = function (props: IState2Prop & IDispatch2Prop & Props) {
 
       <View>
         <Button title={props.words.user_login} onPress={handleSubmit} />
+        <Btn title={props.words.user_login} onPress={handleSubmit} />
         <Text>{props.user && props.user.result && props.user.result.message}</Text>
       </View>
 

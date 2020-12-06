@@ -10,7 +10,8 @@ import ApolloClient from 'apollo-boost';
 import { sys } from './config';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
+import {ThemeProvider} from 'styled-components';
+import theme from './res/style/theme';
 var urljoin = require('url-join');
 
 console.log(urljoin(sys.appHomepage, sys.graphql_endpoint))
@@ -42,7 +43,9 @@ class App extends Component<{}, {}> {
       <>
         <Provider store={store}>
           <ApolloProvider client={client}>
-            <Layout />
+            <ThemeProvider theme={theme}>
+              <Layout />
+            </ThemeProvider>
           </ApolloProvider>
         </Provider>
       </>

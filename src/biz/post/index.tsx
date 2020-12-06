@@ -18,8 +18,10 @@ import { Btn } from '../../component'
 import List from './list'
 import PostPaging from './paging'
 import { calc, time } from '../../tool'
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
-const styles = StyleSheet.create({
+const styles = (props: any) =>StyleSheet.create({
   toStyle: {
     backgroundColor: '#37688c',
     elevation: 8,
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
   txtStyle: {
     textAlign: 'center',
     marginVertical: 8,
-    color: '#fff',
+    // color: props.button.titleColor,
   },
 });
 
@@ -48,7 +50,7 @@ const StyledImageAvatar = styled(Image)`
   marginRight: 10px;
   `
 const PostScreen: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
-
+  const themeContext = useContext(ThemeContext);
   const { user } = props
 
   React.useLayoutEffect(() => {
@@ -63,8 +65,8 @@ const PostScreen: React.FC<IState2Prop & IDispatch2Prop & Props> = function (pro
           :
           // <Button onPress={() => props.navigation.navigate('Login')} title="Login" />
           <Btn
-            toStyle={styles.toStyle}
-            txtStyle={styles.txtStyle}
+            toStyle={styles(themeContext).toStyle}
+            txtStyle={styles(themeContext).txtStyle}
             title={props.words.user_login}
             onPress={() => props.navigation.navigate('Login')}
           />

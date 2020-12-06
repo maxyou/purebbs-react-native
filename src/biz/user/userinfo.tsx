@@ -16,25 +16,32 @@ import {
   Modal,
   TextInput
 } from 'react-native';
-import { Btn } from '../../component'
+// import { withTheme } from 'styled-components';
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
+import { Btn, StyledBtn } from '../../component'
 
-const styles = StyleSheet.create({
-  toStyle: {
-    width: '70%',
-    backgroundColor: '#37688c',
-    elevation: 8,
-    height: 30,
-    borderRadius: 5,
-    margin: 5,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  txtStyle: {
-    textAlign: 'center',
-    marginVertical: 8,
-  },
-});
 
+const styles = (props: any) => {
+  
+  return StyleSheet.create({
+    toStyle: {
+      width: '70%',
+      backgroundColor: '#37688c',
+      elevation: 8,
+      height: 30,
+      borderRadius: 5,
+      margin: 5,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    txtStyle: {
+      textAlign: 'center',
+      marginVertical: 8,
+      color: props.button.titleColor,
+    },
+  });
+}
 const StyledViewContainer = styled(View)`
   padding: 10px;
   justifyContent: center;
@@ -48,6 +55,22 @@ const StyledViewInfo = styled(View)`
   backgroundColor: lightgreen;
   alignItems: stretch;
 `
+const StyledBtnOuter = styled(TouchableOpacity)`  
+  padding: 10px;
+  justifyContent: center;
+  backgroundColor: blue;
+  alignItems: stretch;
+`
+const StyledBtnInner = styled(Text)`  
+  padding: 10px;
+  justifyContent: center;
+  backgroundColor: lightgreen;
+  alignItems: stretch;
+`
+const StyleText = styled(Text)`
+  color: ${props => props.theme.textColor}
+`
+
 function usePrevious(value: any): any {
   const ref = useRef();
   useEffect(() => {
@@ -56,6 +79,9 @@ function usePrevious(value: any): any {
   return ref.current;
 }
 const UserInfo: React.FC<IState2Prop & IDispatch2Prop> = function (props: IState2Prop & IDispatch2Prop) {
+
+  const themeContext = useContext(ThemeContext);
+  console.log(`UserInfo themeContext:${JSON.stringify(themeContext)}`)
 
   const { isLogin, userLogoutting } = props
   const prevProps: IState2Prop = usePrevious({ isLogin, userLogoutting })
@@ -99,12 +125,14 @@ const UserInfo: React.FC<IState2Prop & IDispatch2Prop> = function (props: IState
       {/* <AvatarImg width='35px' src={props.user.avatarPath} /> */}
       <StyledViewInfo>
         <Text>{props.words.user_name}: {props.user.name}</Text>
-        <Text>{props.words.user_role}: {props.user.role}</Text>
-        <Text>{props.words.user_email}: {props.user.email}</Text>
+        <StyleText>{props.words.user_role}: {props.user.role}</StyleText>
+        <StyleText>{props.words.user_email}: {props.user.email}</StyleText>
         <Text>{props.words.cmn_created}: {time.fromNow(props.user.created)}</Text>
       </StyledViewInfo>
       {/* {props.user.source === 'register' ? <button onClick={gotoEdit}> {props.words.cmn_edit}</button> : null} */}
-      <Btn title={props.words.user_logout} onPress={logout} toStyle={styles.toStyle} txtStyle={styles.txtStyle} />
+      {/* <Btn title={props.words.user_logout} onPress={logout} toStyle={styles(themeContext).toStyle} txtStyle={styles(themeContext).txtStyle} /> */}
+      <Btn title={props.words.user_logout} onPress={logout} toStyle={styles(themeContext).toStyle} txtStyle={styles(themeContext).txtStyle} />
+      {/* <StyledBtn title={props.words.user_logout} onPress={logout} Outer={StyledBtnOuter} Inner={StyledBtnInner} /> */}
     </StyledViewContainer>
   );
 }

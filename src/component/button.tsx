@@ -10,27 +10,41 @@ import {
     TouchableOpacity
 } from 'react-native';
 import styled from 'styled-components/native'
+import { StyledComponent } from 'styled-components'
 
-const Btn: React.FC<{ onPress: () => void, title: string, toStyle: {}, txtStyle: {} }> = ({ onPress, title, toStyle, txtStyle }) => {
+const StyledTO = styled(TouchableOpacity)`
+    height: ${props => props.theme.button.height};
+    backgroundColor:${props => props.theme.button.backgroundColor};
+    justifyContent: center;
+    alignItems: center;
+`
+const StyleText = styled(Text)`
+    color: ${props => props.theme.button.titleColor}
+`
+const Btn: React.FC<{ onPress: (e?:any) => void, title: string, toStyle?: {}, txtStyle?: {} }> = ({ onPress, title, toStyle, txtStyle }) => {
 
     return (
-        <TouchableOpacity
+        <StyledTO
             style={toStyle}
             onPress={onPress}>
-            <Text style={txtStyle}>{title}</Text>
-        </TouchableOpacity>
+            <StyleText style={txtStyle}>{title}</StyleText>
+        </StyledTO>
     )
 
 }
 
-const StyledButton: React.FC<{ onPress: () => void, title: string, Outer: React.FC, Inner: React.FC }>
+
+const StyledBtn: React.FC<{ onPress: () => void, title: string, Outer: StyledComponent<typeof TouchableOpacity, any, {}, never>, Inner: React.FC }>
     = ({ onPress, title, Outer, Inner }) => {
         return (
-            <Outer>
+            <Outer onPress={onPress}>
                 <Inner>{title}</Inner>
             </Outer>
         )
     }
 
 
-export default Btn
+export {
+    Btn,
+    StyledBtn
+} 

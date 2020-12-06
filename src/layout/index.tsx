@@ -17,7 +17,8 @@ import {
   StatusBar,
 } from 'react-native';
 import styled from 'styled-components/native'
-
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 interface Props {
   navigation: any
 }
@@ -25,16 +26,17 @@ interface Props {
 const Stack = createStackNavigator();
 
 const App = () => {
+  const themeContext = useContext(ThemeContext);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Post"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#d4713e',
+            backgroundColor: themeContext.header.backgroundColor,
           },
-          headerTintColor: '#fff',
+          headerTintColor: themeContext.header.headerTintColor,
           headerTitleStyle: {
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
           },
         }}>
         <Stack.Screen name="Post" component={PostScreen} options={{title:'PureBBS'}} />

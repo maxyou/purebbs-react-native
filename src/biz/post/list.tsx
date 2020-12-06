@@ -115,6 +115,19 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
 
   useEffect(
     () => {
+          props.get({
+            query: !props.categoryCurrent || props.categoryCurrent === props.category[0].idStr ? {} : { category: props.categoryCurrent },
+            options: {
+              offset: props.postPageSize * (props.postPageCurrent - 1),
+              limit: props.postPageSize,
+              sort: { allUpdated: -1 },
+              select: 'source oauth title postId author authorId commentNum likeUser updated created avatarFileName lastReplyId lastReplyName lastReplyTime allUpdated stickTop category anonymous extend'
+            }
+          })
+    }, [props.user.isLogin ]
+  )
+  useEffect(
+    () => {
       if (
         (!prevProps)
         || (prevProps.postAdding === true && props.postAdding === false)
@@ -138,6 +151,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
       }
     }, [props.postAdding, props.postUpdatting, props.postDeletting, props.postPageCurrent, props.postPageSize, props.categoryCurrent, props.postAttaching]
   )
+
 
 
   const dataSource = useIdAsKey(props.postListResult)
