@@ -114,13 +114,21 @@ const Login = function (props: IState2Prop & IDispatch2Prop & Props) {
 
       <View>
         <Button title={props.words.user_login} onPress={handleSubmit} />
-        <Btn title={props.words.user_login} onPress={handleSubmit} />
         <Text>{props.user && props.user.result && props.user.result.message}</Text>
       </View>
 
+      <View>
+        <Text>没有账号？</Text>
+        <Btn title={props.words.user_register} onPress={gotoRegister} />
+      </View>
 
     </StyledDivLogin>
   );
+
+  function gotoRegister(e: any) {
+    console.log('login goto register')
+    props.navigation.navigate('Register')
+  }
 }
 interface Props {
   navigation: any,

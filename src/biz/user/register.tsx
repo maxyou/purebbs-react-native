@@ -1,93 +1,104 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react';
 import { Dispatch } from 'redux';
-import { detail as actionDetail, post as actionPost } from '../../redux/action'
-
-
+import styled from 'styled-components/native'
+import { connect } from 'react-redux'
+import { user as actionUser } from '../../redux/action'
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   View,
   Button,
   Text,
-  StatusBar,
-  PermissionsAndroid
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  TextInput
 } from 'react-native';
-import styled from 'styled-components/native'
+import { calc } from '../../tool';
+import SvgUri from 'react-native-svg-uri';
+import { Btn } from '../../component'
+const appConfig = require('../../config')
 
-const StyledViewContainer = styled(View)`
+const StyledDivLogin = styled.View`
   padding: 10px;
+  justifyContent: center;
+  backgroundColor: lightblue;
 `
+const StyledTextInput = styled(TextInput)`
+  width: 150px;
+  height: 40px;
+  backgroundColor: #eee;
+  `
+const Register = function (props: IState2Prop & IDispatch2Prop & Props) {
 
-function usePrevious(value: any): any {
-  const ref = useRef();
+  function handleSubmit(e: any) {
+    // e.preventDefault()
+
+    // if(password!==passwordAgain){
+    //   setPrompt(props.words.user_inconsist_pwd_twice)
+    //   return
+    // }else{
+    //   setPrompt('')
+    // }
+
+    props.register({ name: name, password: password, email: email, code: code })
+  }
+
   useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
-const Post: React.FC<IState2Prop & IDispatch2Prop & Props> = (props) => {
+    setRandom(Math.random())
+  }, [])
 
-  useEffect( //退出页面时清除数据，下次进入时为空白页面，并等待从服务器刷新
-    () => {
-      return function cleanup() {
-        props.detailPostCommentsClear('')
-      }
-    }, []
-  )
+  useEffect(() => {
+    console.log('register useEffect')
+    if (props.user.isLogin) {
+      console.log('useEffect to redirect to /post')
+      props.navigation.navigate('Post')
+    }
+  }, [props.user.isLogin])
 
-  console.log('in DetailScreen')
-  console.log(props)
-  const { navigation, route } = props
-  const { id } = route.params;
-
-
-  const { postUpdatting, postAttaching } = props
-  const prevProps: IState2Prop = usePrevious({ postUpdatting, postAttaching })
-
-  useEffect(
-    () => {
-      if (
-        (!prevProps)
-        || (prevProps.postUpdatting === true && props.postUpdatting === false)
-        || (prevProps.postAttaching === true && props.postAttaching === false)
-      ) {
-        console.log(`detail post get: id ${id}`)
-        props.detailPostGet({
-          condition: { postId: id },
-          select: 'title content postId author authorId avatarFileName commentNum likeUser stickTop updated created extend category anonymous source oauth'
-        })
-      }
-    }, [props.postUpdatting, props.postAttaching]
-  )
+  const [random, setRandom] = useState(0)
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordAgain, setPasswordAgain] = useState('')
+  const [email, setEmail] = useState('')
+  const [code, setCode] = useState('')
+  const [prompt, setPrompt] = useState('')
 
   return (
-    <StyledViewContainer>
-      {/* <Text>DetailScreen</Text>
-      <Text>id:{id}</Text>
-      <Button
-        title="go back"
-        onPress={() => props.navigation.goBack()}
-      /> */}
+    <StyledDivLogin>
       <View>
-
-        {/* <Text>{props.post.data.title}</Text> */}
-        {/* <hr /> */}
-        {/* <StyledDivPostContent dangerouslySetInnerHTML={{ __html: converter.makeHtml(props.post.data.content) }}></StyledDivPostContent> */}
-        {props.post && props.post.data ?
-          <Text>
-            {props.post.data.content}
-          </Text> : null
-        }
+        <Text >{props.words.user_name}: </Text>
+        <StyledTextInput onChangeText={text => setName(text)} value={name} />
       </View>
-    </StyledViewContainer>
-  );
-}
 
-interface ICategoryItem {
-  idStr: string,
-  name: string,
+      <View>
+        <Text >{props.words.user_password}: </Text>
+        <StyledTextInput textContentType='password' onChangeText={text => setPassword(text)} value={password} />
+      </View>
+      <View>
+        <Text >{props.words.user_passwordAgain}: </Text>
+        <StyledTextInput textContentType='password' onChangeText={text => setPasswordAgain(text)} value={passwordAgain} />
+      </View>
+
+      <View>
+        <Text >{props.words.cmn_verifyCode}: </Text>
+        <StyledTextInput onChangeText={text => setCode(text)} value={code} />
+      </View>
+
+      <View>
+        <TouchableOpacity onPress={() => setRandom(Math.random())}>
+          {/* <StyledImageVerifyCode source={{ uri: calc.calcVerifyCodePath(''+random) }} /> */}
+          {/* <Image style={{width: 150, height: 50}} source={{ uri: calc.calcVerifyCodePath(''+random) }} /> */}
+          <SvgUri width="150" height="60" source={{ uri: calc.calcVerifyCodePath('' + random) }} />
+        </TouchableOpacity>
+        <Text >{"看不清？点击刷新"}</Text>
+      </View>
+
+      <View>
+        <Button title={props.words.user_register} onPress={handleSubmit} />
+        <Text>{props.user && props.user.result && props.user.result.message}</Text>
+      </View>
+    </StyledDivLogin>
+  );
 }
 interface Props {
   navigation: any,
@@ -96,39 +107,19 @@ interface Props {
 interface IState2Prop {
   user: any,
   words: any,
-  post: any,
-  postLoading: boolean,
-  postUpdatting: boolean,
-  postAttaching: boolean,
-  category: ICategoryItem[],
 }
 interface IDispatch2Prop {
-  detailPostGet: (v?: any) => void,
-  findByIdAndDelete: (v?: any) => void,
-  findByIdAndUpdate: (v: any) => void,
-  findByIdAndAttach: (v?: any) => void,
-  detailPostCommentsClear: (v: any) => void,
+  register: (v?: any) => void,
 }
-
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
   user: state.user,
   words: state.locale.words,
-  post: state.detail.post,
-  postLoading: state.detail.postLoading,
-  postUpdatting: state.detail.postUpdatting,
-  postAttaching: state.detail.postAttaching,
-  category: state.sys.category,
 })
 
 const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: Dispatch) => ({
-  detailPostGet: (v) => dispatch(actionDetail.Creator.detailPostGet(v)),
-  findByIdAndDelete: (v) => dispatch(actionPost.Creator.postFindByIdAndDelete(v)), //暂时复用post页面功能
-  findByIdAndUpdate: (v) => dispatch(actionDetail.Creator.detailPostFindByIdAndUpdate(v)),
-  findByIdAndAttach: (v) => dispatch(actionDetail.Creator.detailPostFindByIdAndAttach(v)),
-  detailPostCommentsClear: (v) => dispatch(actionDetail.Creator.detailPostCommentsClear(v)),
+  register: (v) => dispatch(actionUser.Creator.userRegister(v))
 })
-export default
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Post)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Register)
