@@ -8,9 +8,18 @@ import ReactMde from "react-mde"
 import styled from 'styled-components'
 import * as Showdown from "showdown";
 import { Text, View, Image, FlatList } from 'react-native';
+import { Round as PageRound, Btn } from '../../component'
 
+
+
+const StyledViewPagingContainer = styled(View)`  
+  flexDirection: row;
+  justifyContent: flex-end;
+  marginRight:5px;
+`
 const StyledViewFlatlistContainer = styled(View)`  
-  backgroundColor: gray;
+  backgroundColor: lightgreen;
+  flex:1;
   `
 // flexShrink: 1;
 const StyledDivCard = styled(View)`  
@@ -111,31 +120,36 @@ const Comment: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
 
 
   return (
-    <StyledViewFlatlistContainer>
-      <FlatList
-        data={dataSource}
-        renderItem={
-          (v: any) => {
-            console.log(calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id))
-            return <StyledDivCard>
+    <>
+      <StyledViewPagingContainer>
+        <PageRound current={props.commentPageCurrent} ext={props.commentPaginateExt} totalDocs={props.commentTotalDocs} pageSize={props.commentPageSize} nav={props.nav}></PageRound>
+      </StyledViewPagingContainer>
+      <StyledViewFlatlistContainer>
+        <FlatList
+          data={dataSource}
+          renderItem={
+            (v: any) => {
+              console.log(calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id))
+              return <StyledDivCard>
 
-              <StyledImageAvatar
-                source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
-              />
-              {/* <StyledViewContent> */}
-              <StyledTextContent>
-                {JSON.stringify(v.item.content)}
-              </StyledTextContent>
-              {/* </StyledViewContent> */}
+                <StyledImageAvatar
+                  source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
+                />
+                {/* <StyledViewContent> */}
+                <StyledTextContent>
+                  {JSON.stringify(v.item.content)}
+                </StyledTextContent>
+                {/* </StyledViewContent> */}
 
-            </StyledDivCard>
+              </StyledDivCard>
+            }
           }
-        }
-      >
+        >
 
-      </FlatList>
+        </FlatList>
 
-    </StyledViewFlatlistContainer>
+      </StyledViewFlatlistContainer>
+    </>
   )
 }
 interface Props {
@@ -145,8 +159,10 @@ interface Props {
 interface IState2Prop {
   user: any,
   words: any,
+  commentTotalDocs: number,
   commentPageSize: number,
   commentPageCurrent: number,
+  commentPaginateExt: number,
   commentListResult: any,
   commentListLoading: boolean,
   commentAdding: boolean,
@@ -155,6 +171,7 @@ interface IState2Prop {
   commentAttaching: boolean,
 }
 interface IDispatch2Prop {
+  nav: (v: any) => void,
   get: (v?: any) => void,
   delete: (v?: any) => void,
   update: (v: any) => void,
@@ -165,8 +182,10 @@ interface IDispatch2Prop {
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
   user: state.user,
   words: state.locale.words,
+  commentTotalDocs: state.detail.commentTotalDocs,
   commentPageSize: state.detail.commentPageSize,
   commentPageCurrent: state.detail.commentPageCurrent,
+  commentPaginateExt: state.detail.commentPaginateExt,
   commentListResult: state.detail.commentListResult,
   commentListLoading: state.detail.commentListLoading,
   commentAdding: state.detail.commentAdding,
@@ -181,6 +200,7 @@ const mapDispatchToProps: { (dispatch: Dispatch): IDispatch2Prop } = (dispatch: 
   update: (v) => dispatch(actionDetail.Creator.detailCommentUpdate(v)),
   findByIdAndAttach: (v) => dispatch(actionDetail.Creator.detailCommentFindByIdAndAttach(v)),
   detailPostCommentsClear: (v) => dispatch(actionDetail.Creator.detailPostCommentsClear(v)),
+  nav: (v: any) => dispatch(actionDetail.Creator.detailCommentNav(v)),
 })
 // export default withRouter(connect(
 //   mapStateToProps,
