@@ -19,10 +19,12 @@ import {
 import { Round as PageRound, Btn } from '../../component'
 import Board from './board'
 import user from "../../redux/saga/user";
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
-const styles = StyleSheet.create({
+const styles = (props: any) => StyleSheet.create({
   toStyle: {
-    backgroundColor: '#37688c',
+    backgroundColor: props.paging.categoryButton,
     elevation: 8,
     width: 60,
     height: 30,
@@ -94,6 +96,7 @@ const StyledViewRow = styled(View)`
 
 const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
 
+  const themeContext = useContext(ThemeContext);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -116,14 +119,14 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
 
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {/* <Text style={styles.modalText}>Hello World!</Text> */}
+        <View style={styles(themeContext).centeredView}>
+          <View style={styles(themeContext).modalView}>
+            {/* <Text style={styles(themeContext).modalText}>Hello World!</Text> */}
             <Board categorySelected={() => {setModalVisible(false)}}></Board>
 
             {/* <Btn
-              toStyle={styles.openButton}
-              txtStyle={styles.textStyle}
+              toStyle={styles(themeContext).openButton}
+              txtStyle={styles(themeContext).textStyle}
               onPress={() => {
                 setModalVisible(false);
               }}
@@ -137,8 +140,8 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
       {
         props.user.isLogin?
         <Btn
-          toStyle={styles.toStyle}
-          txtStyle={styles.txtStyle}
+          toStyle={styles(themeContext).toStyle}
+          txtStyle={styles(themeContext).txtStyle}
           onPress={() => navigation.navigate('AddScreen')}
           title='Add' />
           :<><Text></Text></>
@@ -147,8 +150,8 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
       <StyledViewRow>
         <PageRound current={props.postPageCurrent} ext={props.postPaginateExt} totalDocs={props.postTotalDocs} pageSize={props.postPageSize} nav={props.nav}></PageRound>
         <Btn
-          toStyle={styles.toStyle}
-          txtStyle={styles.txtStyle}
+          toStyle={styles(themeContext).toStyle}
+          txtStyle={styles(themeContext).txtStyle}
           onPress={openCategory}
           title='Category' />
       </StyledViewRow>

@@ -22,26 +22,24 @@ import { ThemeContext } from 'styled-components';
 import { Btn, StyledBtn } from '../../component'
 
 
-const styles = (props: any) => {
-  
-  return StyleSheet.create({
-    toStyle: {
-      width: '70%',
-      backgroundColor: '#37688c',
-      elevation: 8,
-      height: 30,
-      borderRadius: 5,
-      margin: 5,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    txtStyle: {
-      textAlign: 'center',
-      marginVertical: 8,
-      color: props.button.titleColor,
-    },
-  });
-}
+const styles = (props: any) => StyleSheet.create({
+  toStyle: {
+    width: '70%',
+    backgroundColor: props.button.backgroundColor,
+    elevation: 8,
+    height: 30,
+    borderRadius: 5,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  txtStyle: {
+    textAlign: 'center',
+    marginVertical: 8,
+    color: props.button.titleColor,
+  },
+});
+
 const StyledViewContainer = styled(View)`
   padding: 10px;
   justifyContent: center;

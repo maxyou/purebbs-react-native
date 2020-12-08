@@ -16,6 +16,8 @@ import {
   StyleSheet
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import { Round as PageRound, Btn } from '../../component'
 // const IconVote = require( '../../res/icon/vote.svg')
 import IconVote from '../../res/icon/vote.svg'
@@ -65,15 +67,27 @@ const StyledTOTitle = styled(TouchableOpacity)`
 const StyledTextTitle = styled(Text)`
   font-size: 18px;
 `
-const StyledTextButtonTitle = styled(Text)`
-  height: 25px;
-  font-size: 18px;
-  color: #fff;
+const StyledViewExtCmt = styled(View)`
+  flexDirection: row;
 `
-
-const styles = StyleSheet.create({
+// alignItems: center;
+// flexShrink: 2;
+// flexGrow: 2;
+// marginLeft: 10px;
+// marginRight: 10px;
+// width: 35px;
+// height: 35px;
+const StyledTOExtIcon = styled(TouchableOpacity)`
+  flexDirection: row;
+  alignItems: center;
+  borderStyle: solid;
+  borderWidth: 1px;
+  borderColor: red;
+  padding: 5px;
+`
+const styles = (props: any) => StyleSheet.create({
   toStyle: {
-    backgroundColor: '#37688c',
+    backgroundColor: props.postList.cmtButton,
     elevation: 8,
     width: 40,
     height: 30,
@@ -107,7 +121,7 @@ function usePrevious(value: any): any {
 
 const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props) {
 
-
+  const themeContext = useContext(ThemeContext);
   const navigation = useNavigation();
   console.log(`PostList navigation: ${navigation}`)
   const { postAdding, postUpdatting, postDeletting, postPageCurrent, postPageSize, categoryCurrent, postAttaching } = props
@@ -201,21 +215,28 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                 </StyledTOTitle>
               </StyledViewAvatarTitle>
 
-              {v.item.extend && v.item.extend.addChoice ?
-                getExtendIcon(v.item.extend.addChoice)
-                : null}
-
-              {
-                v.item.commentNum == 0 ? null
-                  :
-                  <Btn
-                    toStyle={styles.toStyle}
-                    txtStyle={styles.txtStyle}
-                    title={'' + v.item.commentNum}
-                    onPress={() => navigation.navigate('DetailComment', { id: v.item.postId })}
-                  />
-              }
-
+              <StyledViewExtCmt>
+                {v.item.extend && v.item.extend.addChoice ?
+                  <StyledTOExtIcon
+                    onPress={() => {
+                      console.log('press goto detail')
+                      navigation.navigate('DetailPost', { id: v.item.postId })
+                    }}
+                  >
+                    {getExtendIcon(v.item.extend.addChoice)}
+                  </StyledTOExtIcon>
+                  : null}
+                {
+                  v.item.commentNum == 0 ? null
+                    :
+                    <Btn
+                      toStyle={styles(themeContext).toStyle}
+                      txtStyle={styles(themeContext).txtStyle}
+                      title={'' + v.item.commentNum}
+                      onPress={() => navigation.navigate('DetailComment', { id: v.item.postId })}
+                    />
+                }
+              </StyledViewExtCmt>
             </StyledDivCard>
           }
         }

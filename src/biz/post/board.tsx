@@ -15,6 +15,8 @@ import {
   Modal,
 } from 'react-native';
 import { Round as PageRound, Btn } from '../../component'
+import { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
 // background-color: lightgreen;
 // padding-top: 10px;
@@ -27,6 +29,7 @@ const StyledDivCategory = styled(View)`
 
 const Board: React.FC<IState2Prop & IDispatch2Prop & IProp> = function (props) {
 
+  const themeContext = useContext(ThemeContext);
   // const { category, categoryCurrent } = props
   // const prevProps: IState2Prop = usePrevious({ category, categoryCurrent })
 
@@ -55,9 +58,9 @@ const Board: React.FC<IState2Prop & IDispatch2Prop & IProp> = function (props) {
     return false
   }
 
-  const styles = StyleSheet.create({
+  const styles = (props: any) => StyleSheet.create({
     toStyle: {
-      backgroundColor: '#37688c',
+      backgroundColor: props.category.unSelected,
       elevation: 8,
       width: 160,
       height: 30,
@@ -71,7 +74,7 @@ const Board: React.FC<IState2Prop & IDispatch2Prop & IProp> = function (props) {
       marginVertical: 8,
     },
     toStyle_selected: {
-      backgroundColor: '#c7688c',
+      backgroundColor: props.category.selected,
       elevation: 8,
       width: 160,
       height: 30,
@@ -102,8 +105,8 @@ const Board: React.FC<IState2Prop & IDispatch2Prop & IProp> = function (props) {
         return (
           <Btn
             onPress={() => onPress(v.idStr)} title={v.name}
-            toStyle={currentMatch(props.categoryCurrent, v.idStr) ? styles.toStyle : styles.toStyle_selected}
-            txtStyle={currentMatch(props.categoryCurrent, v.idStr) ? styles.txtStyle : styles.txtStyle_selected}
+            toStyle={currentMatch(props.categoryCurrent, v.idStr) ? styles(themeContext).toStyle_selected : styles(themeContext).toStyle}
+            txtStyle={currentMatch(props.categoryCurrent, v.idStr) ? styles(themeContext).txtStyle_selected : styles(themeContext).txtStyle}
           />
         )
       }) : null}

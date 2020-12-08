@@ -6,7 +6,18 @@ export default (themeSetting: any) => ({
         titleColor:'#fff',
         height:'35px',
     },
+    paging:{
+        categoryButton: '#77688c'
+    },
+    postList:{
+        cmtButton: '#77688c'
+    },
+    category:{
+        selected: '#97488c',
+        unSelected: '#87683c'
+    },
     header: {
+        buttonColor: '#37688c',
         backgroundColor: '#dd5533',
         headerTintColor: 'white'
     },

@@ -21,9 +21,9 @@ import { calc, time } from '../../tool'
 import { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
 
-const styles = (props: any) =>StyleSheet.create({
+const styles = (props: any) => StyleSheet.create({
   toStyle: {
-    backgroundColor: '#37688c',
+    backgroundColor: props.header.buttonColor,
     elevation: 8,
     width: 50,
     height: 30,
@@ -83,7 +83,7 @@ const PostScreen: React.FC<IState2Prop & IDispatch2Prop & Props> = function (pro
       <PostPaging></PostPaging>
       {/* </StyledViewPageSelect>       */}
       <StyledViewPostListContainer>
-      <List></List>
+        <List></List>
       </StyledViewPostListContainer>
     </StyledViewPostContainer>
   );
