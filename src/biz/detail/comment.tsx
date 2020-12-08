@@ -9,28 +9,38 @@ import styled from 'styled-components'
 import * as Showdown from "showdown";
 import { Text, View, Image, FlatList } from 'react-native';
 
-
-const StyledDivCard = styled(View)`  
-  backgroundColor: #d7c8cc;
-  flexDirection: row;
-  justifyContent: flex-start;
-  alignItems: stretch;  
-  marginBottom: 1px;
+const StyledViewFlatlistContainer = styled(View)`  
+  backgroundColor: gray;
   `
+// flexShrink: 1;
+const StyledDivCard = styled(View)`  
+  backgroundColor: white;
+  marginBottom: 1px;
+  flexDirection: row;
+  justifyContent: space-between;
+  alignItems: stretch;
+  `
+// const StyledDivCard = styled(View)`  
+//   backgroundColor: #d7c8cc;
+//   flexDirection: row;
+//   justifyContent: flex-start;
+//   alignItems: stretch;  
+//   marginBottom: 1px;
+//   `
 const StyledTextContent = styled(Text)`
   marginTop: 5px;
   marginLeft: 5px;
   marginRight: 5px;
   marginBottom: 5px;
   flexShrink: 1;
+  flexGrow: 1;
+  font-size: 16px;
   `
 const StyledImageAvatar = styled(Image)`
   width: 30px;
   height: 30px;
   borderRadius: 20px;
-  marginTop: 5px;
-  marginBottom: 5px;
-  marginLeft: 5px;
+  margin: 5px;
   `
 
 function useIdAsKey(commentListResult: any) {
@@ -101,7 +111,7 @@ const Comment: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
 
 
   return (
-    <View>
+    <StyledViewFlatlistContainer>
       <FlatList
         data={dataSource}
         renderItem={
@@ -113,19 +123,19 @@ const Comment: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props)
                 source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
               />
               {/* <StyledViewContent> */}
-                <StyledTextContent>
-                  {JSON.stringify(v.item.content)}
-                </StyledTextContent>
+              <StyledTextContent>
+                {JSON.stringify(v.item.content)}
+              </StyledTextContent>
               {/* </StyledViewContent> */}
 
-            </StyledDivCard>            
+            </StyledDivCard>
           }
         }
       >
 
       </FlatList>
 
-    </View>
+    </StyledViewFlatlistContainer>
   )
 }
 interface Props {
@@ -149,7 +159,7 @@ interface IDispatch2Prop {
   delete: (v?: any) => void,
   update: (v: any) => void,
   findByIdAndAttach: (v?: any) => void,
-  detailPostCommentsClear: (v:any) => void,
+  detailPostCommentsClear: (v: any) => void,
 }
 
 const mapStateToProps: { (arg0: any): IState2Prop } = state => ({
