@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { Round as PageRound, Btn } from '../../component'
+// const IconVote = require( '../../res/icon/vote.svg')
+import IconVote from '../../res/icon/vote.svg'
 
 const StyledViewFlatlistContainer = styled(View)`  
   padding: 1px;
@@ -160,6 +162,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
 
   return (
     <StyledViewFlatlistContainer>
+      {/* <IconVote width={120} height={40} /> */}
       <FlatList
         data={dataSource}
         renderItem={
@@ -185,6 +188,10 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                   </StyledTextTitle>
                 </StyledTOTitle>
               </StyledViewAvatarTitle>
+
+              {v.item.extend && v.item.extend.addChoice ?
+                <IconVote width={30} height={30} />
+              : <Text>null</Text>}
 
               {
                 v.item.commentNum == 0 ? null
