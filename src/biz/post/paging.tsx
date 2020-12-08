@@ -82,7 +82,7 @@ const styles = (props: any) => StyleSheet.create({
 // margin: 5px;
 const StyledViewContainer = styled(View)`  
   backgroundColor: #77d8cc;
-  height: 55px;
+  height: 35px;
   flexDirection: row;
   justifyContent: space-between;
   alignItems: center;
@@ -143,7 +143,7 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
           toStyle={styles(themeContext).toStyle}
           txtStyle={styles(themeContext).txtStyle}
           onPress={() => navigation.navigate('AddScreen')}
-          title='Add' />
+          title={props.words.cntnt_addPost} />
           :<><Text></Text></>
       }
       
@@ -153,7 +153,7 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
           toStyle={styles(themeContext).toStyle}
           txtStyle={styles(themeContext).txtStyle}
           onPress={openCategory}
-          title='Category' />
+          title={props.words.category_board} />
       </StyledViewRow>
 
     </StyledViewContainer>

@@ -24,6 +24,8 @@ const zh_CN = {
     user_oauth_login: '使用Oauth登录',
     user_last_post_list: '最后30条post信息',
 
+    category_board: '板块',
+
     cmn_author: '作者',
     cmn_created: '创建于',
     cmn_updated: '更新于',

@@ -13,6 +13,7 @@ import { Round as PageRound, Btn } from '../../component'
 
 
 const StyledViewPagingContainer = styled(View)`  
+  height: 35px;
   flexDirection: row;
   justifyContent: flex-end;
   marginRight:5px;

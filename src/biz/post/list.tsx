@@ -69,6 +69,8 @@ const StyledTextTitle = styled(Text)`
 `
 const StyledViewExtCmt = styled(View)`
   flexDirection: row;
+  marginRight: 5px;
+  alignItems: center;
 `
 // alignItems: center;
 // flexShrink: 2;
@@ -85,6 +87,10 @@ const StyledTOExtIcon = styled(TouchableOpacity)`
   borderColor: red;
   padding: 5px;
 `
+const StyledViewCmtSpace = styled(View)`
+  width:45px;
+`
+
 const styles = (props: any) => StyleSheet.create({
   toStyle: {
     backgroundColor: props.postList.cmtButton,
@@ -92,7 +98,7 @@ const styles = (props: any) => StyleSheet.create({
     width: 40,
     height: 30,
     borderRadius: 5,
-    margin: 5,
+    marginLeft: 5,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -227,7 +233,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                   </StyledTOExtIcon>
                   : null}
                 {
-                  v.item.commentNum == 0 ? null
+                  v.item.commentNum == 0 ? <StyledViewCmtSpace></StyledViewCmtSpace>
                     :
                     <Btn
                       toStyle={styles(themeContext).toStyle}

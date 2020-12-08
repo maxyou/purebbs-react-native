@@ -23,6 +23,8 @@ const en_US = {
     user_register_email_optional: '(optional. for reset password)',
     user_oauth_login: 'oauth login',
     user_last_post_list: 'last 30 posts',
+    
+    category_board: 'board',    
 
     cmn_author: 'author',
     cmn_created: 'created',
