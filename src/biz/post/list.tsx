@@ -18,54 +18,55 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 import { Round as PageRound, Btn } from '../../component'
 
-const StyledTOButtonContainer = styled(TouchableOpacity)`
-  backgroundColor: #77684c;
-  elevation: 8;
-  width: 50px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;  
-  justifyContent: center;
-  alignItems: center;
+const StyledViewFlatlistContainer = styled(View)`  
+  padding: 1px;
+  backgroundColor: gray;
   `
-const StyledTextButtonTitle = styled(Text)`
-  height: 25px;
-  font-size: 18px;
-  color: #fff;
-`
-
-const StyledViewTitle = styled(View)`  
-  flexShrink: 1;
-  marginLeft: 5px;
-`
-const StyledTextTitle = styled(Text)`
-`
-
-// margin: 5px;
+  // flexShrink: 1;
 const StyledDivCard = styled(View)`  
-  backgroundColor: #d7c8cc;
+  backgroundColor: white;
   marginBottom: 1px;
-  height: 45px;
+  height: 50px;
   flexDirection: row;
   justifyContent: space-between;
   alignItems: center;
-`
-// margin: 5px;
-// backgroundColor: #77d8cc;
-const StyledViewAvatarTitle = styled(View)`  
-  height: 40px;
-  flexDirection: row;
-  justifyContent: flex-start;
-  alignItems: center;
-  flexShrink: 1;
   `
+  
+  // height: 60px;
+  // padding: 5px;
+  const StyledViewAvatarTitle = styled(View)`  
+  height: 50px;
+  flexDirection: row;
+  flexShrink: 1;
+  flexGrow: 1;
+  alignItems: stretch;
+  `
+  // justifyContent: flex-start;
+  // padding: 5px;
+  // margin: 5px;
 const StyledImageAvatar = styled(Image)`
   width: 30px;
   height: 30px;
   borderRadius: 20px;
   marginLeft: 5px;
+  alignSelf: center;
   `
-// resizeMode: 'contain';
+const StyledTOTitle = styled(TouchableOpacity)`
+  flexShrink: 2;
+  flexGrow: 2;
+  marginLeft: 10px;
+  marginRight: 10px;
+  flexDirection: row;
+  alignItems: center;
+`
+const StyledTextTitle = styled(Text)`
+  font-size: 18px;
+`
+const StyledTextButtonTitle = styled(Text)`
+  height: 25px;
+  font-size: 18px;
+  color: #fff;
+`
 
 const styles = StyleSheet.create({
   toStyle: {
@@ -115,16 +116,16 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
 
   useEffect(
     () => {
-          props.get({
-            query: !props.categoryCurrent || props.categoryCurrent === props.category[0].idStr ? {} : { category: props.categoryCurrent },
-            options: {
-              offset: props.postPageSize * (props.postPageCurrent - 1),
-              limit: props.postPageSize,
-              sort: { allUpdated: -1 },
-              select: 'source oauth title postId author authorId commentNum likeUser updated created avatarFileName lastReplyId lastReplyName lastReplyTime allUpdated stickTop category anonymous extend'
-            }
-          })
-    }, [props.user.isLogin ]
+      props.get({
+        query: !props.categoryCurrent || props.categoryCurrent === props.category[0].idStr ? {} : { category: props.categoryCurrent },
+        options: {
+          offset: props.postPageSize * (props.postPageCurrent - 1),
+          limit: props.postPageSize,
+          sort: { allUpdated: -1 },
+          select: 'source oauth title postId author authorId commentNum likeUser updated created avatarFileName lastReplyId lastReplyName lastReplyTime allUpdated stickTop category anonymous extend'
+        }
+      })
+    }, [props.user.isLogin]
   )
   useEffect(
     () => {
@@ -158,7 +159,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
   // console.log(`dataSource: ${dataSource}`)
 
   return (
-    <View>
+    <StyledViewFlatlistContainer>
       <FlatList
         data={dataSource}
         renderItem={
@@ -170,18 +171,19 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                 <StyledImageAvatar
                   source={{ uri: calc.calcAvatarPath(v.item, v.item.anonymous, v.item.authorId === props.user._id) }}
                 />
-                <StyledViewTitle>
+                <StyledTOTitle
+                  onPress={() => {
+                    console.log('press goto detail')
+                    navigation.navigate('DetailPost', { id: v.item.postId })
+                  }}
+                >
                   <StyledTextTitle
                     numberOfLines={1}
                     ellipsizeMode={'tail'}
-                    onPress={() => {
-                      console.log('press goto detail')
-                      navigation.navigate('DetailPost', { id: v.item.postId })
-                    }}
                   >
                     {JSON.stringify(v.item.title)}
                   </StyledTextTitle>
-                </StyledViewTitle>
+                </StyledTOTitle>
               </StyledViewAvatarTitle>
 
               {
@@ -199,7 +201,7 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
           }
         }
       />
-    </View>
+    </StyledViewFlatlistContainer>
   )
 }
 interface Props {

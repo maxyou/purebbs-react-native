@@ -39,8 +39,11 @@ const styles = (props: any) =>StyleSheet.create({
   },
 });
 
-const StyledViewPageSelect = styled(View)`
-  height: 50px;
+const StyledViewPostContainer = styled(View)`
+  flex: 1;
+`
+const StyledViewPostListContainer = styled(View)`
+  flexShrink: 1;
 `
 
 const StyledImageAvatar = styled(Image)`
@@ -75,12 +78,14 @@ const PostScreen: React.FC<IState2Prop & IDispatch2Prop & Props> = function (pro
   }, [user.isLogin]);
 
   return (
-    <View>
+    <StyledViewPostContainer>
       {/* <StyledViewPageSelect> */}
       <PostPaging></PostPaging>
       {/* </StyledViewPageSelect>       */}
+      <StyledViewPostListContainer>
       <List></List>
-    </View>
+      </StyledViewPostListContainer>
+    </StyledViewPostContainer>
   );
 };
 

@@ -4,7 +4,7 @@ export default (themeSetting: any) => ({
     button:{
         backgroundColor: 'blue',
         titleColor:'#fff',
-        height:'40px',
+        height:'35px',
     },
     header: {
         backgroundColor: '#dd5533',

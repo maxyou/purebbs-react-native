@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { Round as PageRound, Btn } from '../../component'
 import Board from './board'
+import user from "../../redux/saga/user";
 
 const styles = StyleSheet.create({
   toStyle: {
@@ -133,11 +134,15 @@ const PostBar: React.FC<IState2Prop & IDispatch2Prop> = function (props) {
         </View>
       </Modal>
 
-      <Btn
-        toStyle={styles.toStyle}
-        txtStyle={styles.txtStyle}
-        onPress={() => navigation.navigate('AddScreen')}
-        title='Add' />
+      {
+        props.user.isLogin?
+        <Btn
+          toStyle={styles.toStyle}
+          txtStyle={styles.txtStyle}
+          onPress={() => navigation.navigate('AddScreen')}
+          title='Add' />
+          :<><Text></Text></>
+      }
       
       <StyledViewRow>
         <PageRound current={props.postPageCurrent} ext={props.postPaginateExt} totalDocs={props.postTotalDocs} pageSize={props.postPageSize} nav={props.nav}></PageRound>
