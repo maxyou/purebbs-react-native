@@ -1,6 +1,7 @@
 import { IExtendState } from '../common'
 var urljoin = require('url-join');
-import {sys} from '../config'
+import { sys } from '../config'
+
 /**
  * todo 这里遗留一个问题
  * 
@@ -21,10 +22,10 @@ export default {
     tool(v: any) {
         return v
     },
-    addAvatarApiPath(fileName:string){
+    addAvatarApiPath(fileName: string) {
         return urljoin(API_PATH_AVATAR, fileName)
     },
-    getUserAvatarPath(user:any){
+    getUserAvatarPath(user: any) {
         return urljoin(sys.appHomepage, user.avatarPath)
     },
     getAvatarPathFromUser(user: any) {
@@ -40,9 +41,9 @@ export default {
             }
         }
     },
-    calcVerifyCodePath(random?:string):string{
-        console.log(`calcVerifyCodePath:${urljoin(sys.appHomepage, '/tool/verify','?mt=',random)}`)
-        return urljoin(sys.appHomepage, '/tool/verify','?mt=',random)
+    calcVerifyCodePath(random?: string): string {
+        console.log(`calcVerifyCodePath:${urljoin(sys.appHomepage, '/tool/verify', '?mt=', random)}`)
+        return urljoin(sys.appHomepage, '/tool/verify', '?mt=', random)
     },
     calcAvatarPath(
         user: any,
@@ -71,7 +72,7 @@ export default {
                     return urljoin(sys.appHomepage, API_PATH_AVATAR + user.avatarFileName)
                 } else {
                     // console.log(urljoin(sys.appHomepage,  API_PATH_AVATAR + 'default.png'))
-                    return urljoin(sys.appHomepage,  API_PATH_AVATAR + 'default.png')
+                    return urljoin(sys.appHomepage, API_PATH_AVATAR + 'default.png')
                 }
             }
         }
@@ -139,7 +140,7 @@ export default {
     //       return ''
     //     }
     //   },
-    calcPaginateArray(current:number = 1, ext:number = 2, maxRight: number) {
+    calcPaginateArray(current: number = 1, ext: number = 2, maxRight: number) {
         // console.log('------------calcPaginateArray---------------')
         // console.log(typeof current)
         // console.log(current)
@@ -148,7 +149,7 @@ export default {
         // required:
         //  current <= maxright
 
-        let ba:number[] = [current]
+        let ba: number[] = [current]
         for (let i = 0; i < ext; i++) {
             ba.push((current + 1) + i)
         }
@@ -182,15 +183,15 @@ export default {
         // console.log(ba)
         return ba
     },
-    getRandomColorString(){
+    getRandomColorString() {
 
         var hex = Math.floor(Math.random() * Math.floor(0xffffff))
         var hexStr = hex.toString(16)
-        
+
         while (hexStr.length < 6) {
             hexStr = "0" + hexStr;
         }
-        
+
         // console.log(hexStr)
         return "#" + hexStr
     }

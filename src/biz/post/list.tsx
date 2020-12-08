@@ -19,12 +19,13 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Round as PageRound, Btn } from '../../component'
 // const IconVote = require( '../../res/icon/vote.svg')
 import IconVote from '../../res/icon/vote.svg'
+import IconLineup from '../../res/icon/lineup.svg'
 
 const StyledViewFlatlistContainer = styled(View)`  
   padding: 1px;
   backgroundColor: gray;
   `
-  // flexShrink: 1;
+// flexShrink: 1;
 const StyledDivCard = styled(View)`  
   backgroundColor: white;
   marginBottom: 1px;
@@ -33,19 +34,19 @@ const StyledDivCard = styled(View)`
   justifyContent: space-between;
   alignItems: center;
   `
-  
-  // height: 60px;
-  // padding: 5px;
-  const StyledViewAvatarTitle = styled(View)`  
+
+// height: 60px;
+// padding: 5px;
+const StyledViewAvatarTitle = styled(View)`  
   height: 50px;
   flexDirection: row;
   flexShrink: 1;
   flexGrow: 1;
   alignItems: stretch;
   `
-  // justifyContent: flex-start;
-  // padding: 5px;
-  // margin: 5px;
+// justifyContent: flex-start;
+// padding: 5px;
+// margin: 5px;
 const StyledImageAvatar = styled(Image)`
   width: 30px;
   height: 30px;
@@ -155,7 +156,18 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
     }, [props.postAdding, props.postUpdatting, props.postDeletting, props.postPageCurrent, props.postPageSize, props.categoryCurrent, props.postAttaching]
   )
 
+  function getExtendIcon(v: string) {
 
+    switch (v) {
+      case 'lineup':
+        return <IconLineup width={30} height={30} />
+      case 'vote':
+        return <IconVote width={30} height={30} />
+      default:
+        return null
+    }
+
+  }
 
   const dataSource = useIdAsKey(props.postListResult)
   // console.log(`dataSource: ${dataSource}`)
@@ -190,8 +202,8 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
               </StyledViewAvatarTitle>
 
               {v.item.extend && v.item.extend.addChoice ?
-                <IconVote width={30} height={30} />
-              : <Text>null</Text>}
+                getExtendIcon(v.item.extend.addChoice)
+                : null}
 
               {
                 v.item.commentNum == 0 ? null
