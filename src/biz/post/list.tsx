@@ -226,7 +226,10 @@ const PostList: React.FC<IState2Prop & IDispatch2Prop & Props> = function (props
                   <StyledTOExtIcon
                     onPress={() => {
                       console.log('press goto detail')
-                      navigation.navigate('DetailPost', { id: v.item.postId })
+                      navigation.navigate(
+                        v.item.extend.addChoice==='vote'?
+                        'Vote':'Lineup', 
+                        { id: v.item.postId })
                     }}
                   >
                     {getExtendIcon(v.item.extend.addChoice)}
